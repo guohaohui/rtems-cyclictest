@@ -1,0 +1,48 @@
+工具链：export PATH=$HOME/ghh/opt/rtems6.1/bin:$PATH
+
+//多核config.ini配置
+[x86_64/amd64]
+BSP_MULTIBOOT_SUPPORT = True
+RTEMS_SMP = True
+BUILD_TESTS = True
+BUILD_SMPTESTS = True
+
+#编译选项
+./waf distclean
+
+./waf configure --prefix=/$HOME/ghh/rtems6.1
+
+./waf build
+
+./waf install #这个暂时不执行，有需要的时候我会手动执行
+
+
+#制作groub efi 引导使用qemu测试
+在grup目录下
+(1)创建目录
+mkdir -p RTEMS-GRUB/EFI/BOOT
+
+(2)在当前文件夹下创建guub.cfg文件，配置以下内容
+touch grub.cfg
+
+set timeout=0
+set default=0
+search --file --set=root /rtems
+menuentry 'RTEMS' {
+multiboot2 /rtems
+boot
+}
+
+(3)制作BOOTX64.EFI
+
+grub-mkstandalone --format=x86_64-efi --fonts="" --locales="" --themes="" --install-modules="normal search fat multiboot2" boot/grub/grub.cfg=grub.cfg -o RTEMS-GRUB/EFI/BOOT/BOOTX64.EFI
+
+
+(4)将rtems可执行程改名为rtems序放到RTEMS-GRUB/
+cp hello.exe RTEMS-GRUB/rtems
+
+(5)制作RTEMS-GRUB.img 镜像
+makefs -t msdos -s 50m RTEMS-GRUB.img RTEMS-GRUB
+
+(6)使用qemu启动
+qemu-system-x86_64 -m 512 -smp 4 -serial stdio -no-reboot -no-shutdown --bios /usr/share/ovmf/OVMF.fd -drive file=RTEMS-GRUB.img,format=raw
