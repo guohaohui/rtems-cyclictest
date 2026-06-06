@@ -1,0 +1,21 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+build-type: test-program
+cflags: []
+copyrights:
+- Copyright (C) 2024 RTEMS Project
+cppflags: []
+cxxflags: []
+enabled-by: true
+features: c cprogram
+includes: []
+ldflags: []
+links: []
+source:
+- testsuites/samples/cyclictest/init.c
+- testsuites/samples/cyclictest/cyclictest.c
+- testsuites/samples/cyclictest/histogram.c
+stlib: []
+target: testsuites/samples/cyclictest.exe
+type: build
+use-after: []
+use-before: []

@@ -25,6 +25,8 @@ links:
 - role: build-dependency
   uid: cdtest
 - role: build-dependency
+  uid: cyclictest
+- role: build-dependency
   uid: fileio
 - role: build-dependency
   uid: hello

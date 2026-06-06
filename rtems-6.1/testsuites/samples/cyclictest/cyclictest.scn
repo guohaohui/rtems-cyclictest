@@ -1,0 +1,6 @@
+*** BEGIN OF TEST CYCLICTEST ***
+=== RTEMS Cyclictest ===
+Interval: 1000 us,  Max cycles: 10000,  Priority: 2
+Measuring latency...
+===== Cyclictest Results =====
+*** END OF TEST CYCLICTEST ***

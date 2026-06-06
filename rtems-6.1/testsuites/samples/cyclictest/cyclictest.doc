@@ -1,0 +1,16 @@
+This is the Cyclictest benchmark ported to RTEMS.
+
+Cyclictest measures the difference between expected and actual wake-up
+time of a high-priority thread. It uses clock_nanosleep() with
+TIMER_ABSTIME for precise periodic timing, and clock_gettime() for
+high-resolution timestamps.
+
+The test runs a configurable number of iterations (default: 10000)
+with a configurable interval (default: 1000 us). After completion,
+it prints min/avg/max latency statistics.
+
+Configuration:
+  INTERVAL_US       - Measurement interval in microseconds
+  MAX_CYCLES        - Number of cycles (0 = infinite)
+  PRIORITY          - Measurement task priority
+  PRINT_INTERVAL    - Intermediate output frequency
