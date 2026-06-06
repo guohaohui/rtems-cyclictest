@@ -1,0 +1,36 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+build-type: config-file
+content: |
+  #
+  # pkg-config support file for RTEMS BSP ${ARCH}/${BSP_NAME}
+  #
+  # Warning: This stuff is experimental and may be changed at any time.
+  #
+
+  prefix=${PREFIX}
+  exec_prefix=$${prefix}/${ARCH}-rtems${__RTEMS_MAJOR__}
+  libdir=$${exec_prefix}/${BSP_NAME}/lib
+  includedir=$${libdir}/include
+
+  ABI_FLAGS=${ABI_FLAGS}
+  RTEMS_ARCH=${ARCH}
+  RTEMS_BSP=${BSP_NAME}
+  RTEMS_BSP_BASE=${BSP_BASE}
+  RTEMS_BSP_FAMILY=${BSP_FAMILY}
+  RTEMS_MAJOR=${__RTEMS_MAJOR__}
+  RTEMS_MINOR=${__RTEMS_MINOR__}
+  RTEMS_REVISION=${__RTEMS_REVISION__}
+
+  Name: ${ARCH}-rtems${__RTEMS_MAJOR__}-${BSP_NAME}
+  Version: ${RTEMS_VERSION}
+  Description: RTEMS BSP ${ARCH}/${BSP_NAME}
+  Cflags: $${ABI_FLAGS} -isystem$${includedir}
+  Ldflags: $${ABI_FLAGS} -B$${libdir} ${PKGCONFIG_LDFLAGS}
+  Libs: $${ABI_FLAGS} -B$${libdir} ${PKGCONFIG_LDFLAGS}
+copyrights:
+- Copyright (C) 2020 embedded brains GmbH & Co. KG
+enabled-by: true
+install-path: ${PREFIX}/lib/pkgconfig
+links: []
+target: ${ARCH}-rtems${__RTEMS_MAJOR__}-${BSP_NAME}.pc
+type: build

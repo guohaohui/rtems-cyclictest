@@ -1,0 +1,187 @@
+/* SPDX-License-Identifier: BSD-2-Clause */
+
+/**
+ * @file
+ *
+ * @ingroup RTEMSImplClassicRateMonotonic
+ *
+ * @brief This header file provides data structures used by the implementation
+ *   and the @ref RTEMSImplApplConfig to define ::_Rate_monotonic_Information.
+ */
+
+/* COPYRIGHT (c) 1989-2009, 2016.
+ * On-Line Applications Research Corporation (OAR).
+ * COPYRIGHT (c) 2016-2017 Kuan-Hsun Chen.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ */
+
+#ifndef _RTEMS_RTEMS_RATEMONDATA_H
+#define _RTEMS_RTEMS_RATEMONDATA_H
+
+#include <rtems/rtems/ratemon.h>
+#include <rtems/score/timestamp.h>
+#include <rtems/score/thread.h>
+#include <rtems/score/watchdog.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/**
+ * @addtogroup RTEMSImplClassicRateMonotonic
+ *
+ * @{
+ */
+
+/**
+ *  The following defines the INTERNAL data structure that has the
+ *  statistics kept on each period instance.
+ */
+typedef struct {
+  /** This field contains the number of periods executed. */
+  uint32_t     count;
+  /** This field contains the number of periods missed. */
+  uint32_t     missed_count;
+
+  /** This field contains the least amount of CPU time used in a period. */
+  Timestamp_Control min_cpu_time;
+  /** This field contains the highest amount of CPU time used in a period. */
+  Timestamp_Control max_cpu_time;
+  /** This field contains the total amount of wall time used in a period. */
+  Timestamp_Control total_cpu_time;
+
+  /** This field contains the least amount of wall time used in a period. */
+  Timestamp_Control min_wall_time;
+  /** This field contains the highest amount of wall time used in a period. */
+  Timestamp_Control max_wall_time;
+  /** This field contains the total amount of CPU time used in a period. */
+  Timestamp_Control total_wall_time;
+}  Rate_monotonic_Statistics;
+
+/**
+ * @brief The following structure defines the control block used to manage each
+ * period.
+ *
+ * State changes are protected by the default thread lock of the owner thread.
+ * The owner thread is the thread that created the period object.  The owner
+ * thread field is immutable after object creation.
+ */
+typedef struct {
+  /** This field is the object management portion of a Period instance. */
+  Objects_Control                         Object;
+
+#if defined(RTEMS_SMP)
+  /**
+   * @brief Protects the rate monotonic period state.
+   */
+  ISR_lock_Control                        Lock;
+#endif
+
+  /** This is the timer used to provide the unblocking mechanism. */
+  Watchdog_Control                        Timer;
+
+  /** This field indicates the current state of the period. */
+  rtems_rate_monotonic_period_states      state;
+
+  /**
+   * @brief A priority node for use by the scheduler job release and cancel
+   * operations.
+   */
+  Priority_Node                           Priority;
+
+  /**
+   * This field contains the length of the next period to be
+   * executed.
+   */
+  uint32_t                                next_length;
+
+  /**
+   * This field contains a pointer to the TCB for the thread
+   * which owns and uses this period instance.
+   */
+  Thread_Control                         *owner;
+
+  /**
+   * This field contains the cpu usage value of the owning thread when
+   * the period was initiated.  It is used to compute the period's
+   * statistics.
+   */
+  Timestamp_Control                       cpu_usage_period_initiated;
+
+  /**
+   * This field contains the wall time value when the period
+   * was initiated.  It is used to compute the period's statistics.
+   */
+  Timestamp_Control                       time_period_initiated;
+
+  /**
+   * This field contains the statistics maintained for the period.
+   */
+  Rate_monotonic_Statistics               Statistics;
+
+  /**
+   * This field contains the number of postponed jobs.
+   * When the watchdog timeout, this variable will be increased immediately.
+   */
+  uint32_t                                postponed_jobs;
+
+  /**
+   *  This field contains the tick of the latest deadline decided by the period
+   *  watchdog.
+  */
+  uint64_t                                latest_deadline;
+}   Rate_monotonic_Control;
+
+/**
+ * @brief The Classic Rate Monotonic objects information.
+ */
+extern Objects_Information _Rate_monotonic_Information;
+
+/**
+ * @brief Macro to define the objects information for the Classic Rate
+ * Monotonic objects.
+ *
+ * This macro should only be used by <rtems/confdefs.h>.
+ *
+ * @param max The configured object maximum (the OBJECTS_UNLIMITED_OBJECTS flag
+ * may be set).
+ */
+#define RATE_MONOTONIC_INFORMATION_DEFINE( max ) \
+  OBJECTS_INFORMATION_DEFINE( \
+    _Rate_monotonic, \
+    OBJECTS_CLASSIC_API, \
+    OBJECTS_RTEMS_PERIODS, \
+    Rate_monotonic_Control, \
+    max, \
+    OBJECTS_NO_STRING_NAME, \
+    NULL \
+  )
+
+/** @} */
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif
+/* end of include file */

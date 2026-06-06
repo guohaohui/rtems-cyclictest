@@ -1,0 +1,17 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+actions:
+- get-integer: null
+- define: null
+build-type: option
+copyrights:
+- Copyright (C) 2020 embedded brains GmbH & Co. KG
+default:
+- enabled-by: true
+  value: 0
+description: |
+  determines which serial device will be registered as /dev/console
+enabled-by: true
+format: '{}'
+links: []
+name: MPC55XX_CONSOLE_MINOR
+type: build

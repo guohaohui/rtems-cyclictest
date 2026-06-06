@@ -1,0 +1,27 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+actions:
+- get-integer: null
+- define: null
+build-type: option
+copyrights:
+- Copyright (C) 2020 embedded brains GmbH & Co. KG
+default:
+- enabled-by:
+  - bsps/powerpc/motorola_powerpc
+  - m68k/m5484FireEngine
+  - powerpc/beatnik
+  - powerpc/hsc_cm01
+  - powerpc/mvme3100
+  - powerpc/mvme5500
+  value: 9600
+- enabled-by: m68k/COBRA5475
+  value: 19200
+- enabled-by: true
+  value: 115200
+description: |
+  Default baud for console and other serial devices.
+enabled-by: true
+format: '{}'
+links: []
+name: BSP_CONSOLE_BAUD
+type: build

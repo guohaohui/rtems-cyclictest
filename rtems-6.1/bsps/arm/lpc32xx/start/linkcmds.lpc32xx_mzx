@@ -1,0 +1,48 @@
+/**
+ * @file
+ *
+ * @ingroup lpc32xx_linker_mzx
+ *
+ * @brief Memory map.
+ */
+
+/**
+ * @defgroup lpc32xx_linker_mzx MZX Application Memory Map
+ *
+ * @ingroup bsp_linker
+ *
+ * @brief MZX application memory map.
+ */
+
+MEMORY {
+	RAM_INT : ORIGIN = 0x08000000, LENGTH = 256k
+	RAM_MMU : ORIGIN = 0x80000000, LENGTH = 16k /* SDRAM on DYCS0 */
+	RAM_SCRATCH : ORIGIN = 0x80004000, LENGTH = 4k /* SDRAM on DYCS0 */
+	RAM_EXT : ORIGIN = 0x80005000, LENGTH = 64M - 20k /* SDRAM on DYCS0 */
+}
+
+REGION_ALIAS ("REGION_START", RAM_EXT);
+REGION_ALIAS ("REGION_VECTOR", RAM_INT);
+REGION_ALIAS ("REGION_TEXT", RAM_EXT);
+REGION_ALIAS ("REGION_TEXT_LOAD", RAM_EXT);
+REGION_ALIAS ("REGION_RODATA", RAM_EXT);
+REGION_ALIAS ("REGION_RODATA_LOAD", RAM_EXT);
+REGION_ALIAS ("REGION_DATA", RAM_EXT);
+REGION_ALIAS ("REGION_DATA_LOAD", RAM_EXT);
+REGION_ALIAS ("REGION_FAST_TEXT", RAM_EXT);
+REGION_ALIAS ("REGION_FAST_TEXT_LOAD", RAM_EXT);
+REGION_ALIAS ("REGION_FAST_DATA", RAM_EXT);
+REGION_ALIAS ("REGION_FAST_DATA_LOAD", RAM_EXT);
+REGION_ALIAS ("REGION_BSS", RAM_EXT);
+REGION_ALIAS ("REGION_WORK", RAM_EXT);
+REGION_ALIAS ("REGION_STACK", RAM_INT);
+REGION_ALIAS ("REGION_NOCACHE", RAM_INT);
+REGION_ALIAS ("REGION_NOCACHE_LOAD", RAM_INT);
+
+lpc32xx_scratch_area = ORIGIN (RAM_SCRATCH);
+
+bsp_stack_abt_size = DEFINED (bsp_stack_abt_size) ? bsp_stack_abt_size : 1024;
+
+bsp_section_rwbarrier_align = DEFINED (bsp_section_rwbarrier_align) ? bsp_section_rwbarrier_align : 1M;
+
+INCLUDE linkcmds.lpc32xx

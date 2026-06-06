@@ -1,0 +1,59 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+build-type: group
+cflags: []
+copyrights:
+- Copyright (C) 2020 embedded brains GmbH & Co. KG
+cppflags: []
+cxxflags: []
+enabled-by: true
+includes: []
+install: []
+ldflags: []
+links:
+- role: build-dependency
+  uid: ../grp
+- role: build-dependency
+  uid: abi
+- role: build-dependency
+  uid: obj
+- role: build-dependency
+  uid: objsmp
+- role: build-dependency
+  uid: ../../optstarthyp
+- role: build-dependency
+  uid: opti2ciomode
+- role: build-dependency
+  uid: ../optmmusz
+- role: build-dependency
+  uid: optnocachelen
+- role: build-dependency
+  uid: optramlen
+- role: build-dependency
+  uid: optresetvec
+- role: build-dependency
+  uid: optrpi2
+- role: build-dependency
+  uid: optspiiomode
+- role: build-dependency
+  uid: ../start
+- role: build-dependency
+  uid: ../../obj
+- role: build-dependency
+  uid: ../../objdevserialarmpl011
+- role: build-dependency
+  uid: ../../objirq
+- role: build-dependency
+  uid: linkcmds
+- role: build-dependency
+  uid: ../../bspopts
+- role: build-dependency
+  uid: ../../optfdtcpyro
+- role: build-dependency
+  uid: ../../optfdtmxsz
+- role: build-dependency
+  uid: ../../optfdtro
+- role: build-dependency
+  uid: ../../optfdtuboot
+type: build
+use-after: []
+use-before: []

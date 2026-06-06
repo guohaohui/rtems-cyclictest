@@ -1,0 +1,16 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+actions:
+- get-boolean: null
+- define-condition: null
+build-type: option
+copyrights:
+- Copyright (C) 2020 embedded brains GmbH & Co. KG
+default:
+- enabled-by: true
+  value: false
+description: |
+  if defined, enable start prologue
+enabled-by: true
+links: []
+name: MPC55XX_ENABLE_START_PROLOGUE
+type: build

@@ -1,0 +1,18 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+actions:
+- get-boolean: null
+- define-condition: null
+build-type: option
+copyrights:
+- Copyright (C) 2020 embedded brains GmbH & Co. KG
+default:
+- enabled-by: powerpc/br_uid
+  value: true
+- enabled-by: true
+  value: false
+description: |
+  if defined, then use settings for the BR UID board
+enabled-by: true
+links: []
+name: MPC83XX_BOARD_BR_UID
+type: build

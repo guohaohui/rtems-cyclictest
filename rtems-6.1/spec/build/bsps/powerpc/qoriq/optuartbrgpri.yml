@@ -1,0 +1,17 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+actions:
+- get-integer: null
+- define: null
+build-type: option
+copyrights:
+- Copyright (C) 2020 embedded brains GmbH & Co. KG
+default:
+- enabled-by: true
+  value: 250
+description: |
+  UART to Intercom bridge task priority
+enabled-by: true
+format: '{}'
+links: []
+name: QORIQ_UART_BRIDGE_TASK_PRIORITY
+type: build

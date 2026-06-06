@@ -1,0 +1,51 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+build-type: objects
+cflags: []
+copyrights:
+- Copyright (C) 2020 embedded brains GmbH & Co. KG
+cppflags: []
+cxxflags: []
+enabled-by: true
+includes: []
+install:
+- destination: ${BSP_INCLUDEDIR}
+  source:
+  - bsps/arm/xilinx-zynq/include/bsp.h
+- destination: ${BSP_INCLUDEDIR}/bsp
+  source:
+  - bsps/arm/xilinx-zynq/include/bsp/i2c.h
+  - bsps/arm/xilinx-zynq/include/bsp/irq.h
+- destination: ${BSP_INCLUDEDIR}/dev/i2c
+  source:
+  - bsps/include/dev/i2c/cadence-i2c-regs.h
+  - bsps/include/dev/i2c/cadence-i2c.h
+- destination: ${BSP_INCLUDEDIR}/dev/devcfg
+  source:
+  - bsps/arm/xilinx-zynq/include/dev/devcfg/zynq-devcfg.h
+- destination: ${BSP_INCLUDEDIR}/dev/slcr
+  source:
+  - bsps/arm/xilinx-zynq/include/dev/slcr/zynq-slcr.h
+links: []
+source:
+- bsps/arm/shared/cache/cache-l2c-310.c
+- bsps/arm/shared/clock/clock-a9mpcore.c
+- bsps/arm/shared/cp15/arm-cp15-set-exception-handler.c
+- bsps/arm/shared/cp15/arm-cp15-set-ttb-entries.c
+- bsps/arm/shared/start/bsp-start-memcpy.S
+- bsps/arm/xilinx-zynq/console/console-init.c
+- bsps/shared/dev/i2c/cadence-i2c.c
+- bsps/arm/xilinx-zynq/start/bspreset.c
+- bsps/arm/xilinx-zynq/start/bspstart.c
+- bsps/arm/xilinx-zynq/start/bspstarthooks.c
+- bsps/arm/xilinx-zynq/start/bspstartmmu.c
+- bsps/shared/dev/btimer/btimer-cpucounter.c
+- bsps/shared/dev/getentropy/getentropy-cpucounter.c
+- bsps/shared/dev/irq/arm-gicv2-get-attributes.c
+- bsps/shared/dev/serial/console-termios.c
+- bsps/shared/irq/irq-default-handler.c
+- bsps/shared/start/gettargethash-default.c
+- bsps/shared/start/sbrk.c
+- bsps/shared/start/stackalloc.c
+- bsps/arm/xilinx-zynq/dev/devcfg/zynq-devcfg.c
+- bsps/arm/xilinx-zynq/dev/slcr/zynq-slcr.c
+type: build

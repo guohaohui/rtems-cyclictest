@@ -1,0 +1,36 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+build-type: library
+cflags:
+- ${COVERAGE_COMPILER_FLAGS}
+copyrights:
+- Copyright (C) 2020 embedded brains GmbH & Co. KG
+cppflags: []
+cxxflags:
+- ${COVERAGE_COMPILER_FLAGS}
+enabled-by: true
+includes: []
+install:
+- destination: ${BSP_INCLUDEDIR}
+  source:
+  - cpukit/include/zconf.h
+  - cpukit/include/zlib.h
+install-path: ${BSP_LIBDIR}
+links: []
+source:
+- cpukit/compression/zlib/adler32.c
+- cpukit/compression/zlib/compress.c
+- cpukit/compression/zlib/crc32.c
+- cpukit/compression/zlib/deflate.c
+- cpukit/compression/zlib/gzclose.c
+- cpukit/compression/zlib/gzlib.c
+- cpukit/compression/zlib/gzread.c
+- cpukit/compression/zlib/gzwrite.c
+- cpukit/compression/zlib/infback.c
+- cpukit/compression/zlib/inffast.c
+- cpukit/compression/zlib/inflate.c
+- cpukit/compression/zlib/inftrees.c
+- cpukit/compression/zlib/trees.c
+- cpukit/compression/zlib/uncompr.c
+- cpukit/compression/zlib/zutil.c
+target: z
+type: build

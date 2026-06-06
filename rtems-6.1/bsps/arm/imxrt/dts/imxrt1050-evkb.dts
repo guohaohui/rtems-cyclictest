@@ -1,0 +1,125 @@
+/* SPDX-License-Identifier: BSD-2-Clause */
+
+/*
+ * Copyright (C) 2020 embedded brains GmbH & Co. KG
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ */
+
+/*
+ * FIXME: Compilation should be automated.
+ *
+ * Compile this file with the following commands:
+ *     export BSP_DIR="${RTEMS_SRC_DIR}/bsps/arm/imxrt/"
+ *     arm-rtems6-cpp -P -x assembler-with-cpp -I "${BSP_DIR}/include/" -include "${BSP_DIR}/dts/imxrt1050-evkb.dts" /dev/null | \
+ *         dtc -O dtb -o "${BSP_DIR}/dts/imxrt1050-evkb.dtb" -b 0 -p 64
+ *     rtems-bin2c -A 8 -C -N imxrt_dtb "${BSP_DIR}/dts/imxrt1050-evkb.dtb" "${BSP_DIR}/dts/imxrt1050-evkb.tmp.c"
+ *     head -27 "${BSP_DIR}/dts/imxrt1050-evkb.dts" > "${BSP_DIR}/dts/imxrt1050-evkb.c"
+ *     cat "${BSP_DIR}/dts/imxrt1050-evkb.tmp.c" >> "${BSP_DIR}/dts/imxrt1050-evkb.c"
+ */
+
+/dts-v1/;
+
+#include <imxrt/imxrt1050-pinfunc.h>
+#include <imxrt/imxrt1050.dtsi>
+
+&lpuart1 {
+	pinctrl-0 = <&pinctrl_lpuart1>;
+	status = "okay";
+};
+
+&chosen {
+	stdout-path = &lpuart1;
+};
+
+&lpuart3 {
+	pinctrl-0 = <&pinctrl_lpuart3>;
+	status = "okay";
+};
+
+&lpspi1 {
+	pinctrl-0 = <&pinctrl_lpspi1>;
+	status = "okay";
+};
+
+&lpi2c1 {
+	pinctrl-0 = <&pinctrl_lpi2c1>;
+	status = "okay";
+};
+
+&fec1 {
+	pinctrl-0 = <&pinctrl_fec1>;
+	phy-reset-gpios = <&gpio1 9 1>;
+	rtems,phy-interrupt-gpios = <&gpio1 10 1>;
+	status = "okay";
+};
+
+&iomuxc {
+	pinctrl_lpuart1: lpuart1grp {
+		fsl,pins = <
+			IMXRT_PAD_GPIO_AD_B0_12__LPUART1_TX	0x8
+			IMXRT_PAD_GPIO_AD_B0_13__LPUART1_RX	0x13000
+		>;
+	};
+
+	pinctrl_lpuart3: lpuart3grp {
+		fsl,pins = <
+			IMXRT_PAD_GPIO_AD_B1_06__LPUART3_TX	0x8
+			IMXRT_PAD_GPIO_AD_B1_07__LPUART3_RX	0x13000
+		>;
+	};
+
+	pinctrl_lpspi1: lpspi1grp {
+		fsl,pins = <
+			IMXRT_PAD_GPIO_SD_B0_01__LPSPI1_PCS0	0x8
+			IMXRT_PAD_GPIO_SD_B0_02__LPSPI1_SDO	0x8
+			IMXRT_PAD_GPIO_SD_B0_03__LPSPI1_SDI	0x1b000
+			IMXRT_PAD_GPIO_SD_B0_00__LPSPI1_SCK	0x8
+		>;
+	};
+
+	pinctrl_lpi2c1: lpi2c1grp {
+		fsl,pins = <
+			IMXRT_PAD_GPIO_AD_B1_00__LPI2C1_SCL	0x4000f830
+			IMXRT_PAD_GPIO_AD_B1_01__LPI2C1_SDA	0x4000f830
+		>;
+	};
+
+	pinctrl_fec1: fec1grp {
+		fsl,pins = <
+			IMXRT_PAD_GPIO_EMC_41__ENET_enet_mdio		0xb829
+			IMXRT_PAD_GPIO_EMC_40__ENET_enet_mdc		0xb0e9
+			IMXRT_PAD_GPIO_B1_04__ENET_enet_rx_data0	0xb0e9
+			IMXRT_PAD_GPIO_B1_05__ENET_enet_rx_data1	0xb0e9
+			IMXRT_PAD_GPIO_B1_06__ENET_enet_rx_en		0xb0e9
+			IMXRT_PAD_GPIO_B1_07__ENET_enet_tx_data0	0xb0e9
+			IMXRT_PAD_GPIO_B1_08__ENET_enet_tx_data1	0xb0e9
+			IMXRT_PAD_GPIO_B1_09__ENET_enet_tx_en		0xb0e9
+			IMXRT_PAD_GPIO_B1_10__ENET_enet_ref_clk		0x40000031
+			IMXRT_PAD_GPIO_B1_11__ENET_enet_rx_er		0xb0e9
+			/* ENET_RST */
+			IMXRT_PAD_GPIO_AD_B0_09__GPIO1_gpio_io09	0x810
+			/* ENET_INT */
+			IMXRT_PAD_GPIO_AD_B0_10__GPIO1_gpio_io10	0xb0a9
+		>;
+	};
+};

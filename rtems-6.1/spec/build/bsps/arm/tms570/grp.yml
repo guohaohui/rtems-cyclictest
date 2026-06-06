@@ -1,0 +1,79 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+build-type: group
+cflags: []
+copyrights:
+- Copyright (C) 2020 embedded brains GmbH & Co. KG
+cppflags: []
+cxxflags: []
+enabled-by: true
+includes: []
+install: []
+ldflags: []
+links:
+- role: build-dependency
+  uid: optvariant
+- role: build-dependency
+  uid: ../grp
+- role: build-dependency
+  uid: ../start
+- role: build-dependency
+  uid: abi
+- role: build-dependency
+  uid: obj
+- role: build-dependency
+  uid: optlowinit
+- role: build-dependency
+  uid: objhwinit
+- role: build-dependency
+  uid: objnohwinit
+- role: build-dependency
+  uid: optconirq
+- role: build-dependency
+  uid: optmintskstksz
+- role: build-dependency
+  uid: optoscmain
+- role: build-dependency
+  uid: optgclk
+- role: build-dependency
+  uid: opthclk
+- role: build-dependency
+  uid: optvclk
+- role: build-dependency
+  uid: optvclk2
+- role: build-dependency
+  uid: optvclk3
+- role: build-dependency
+  uid: optrticlk
+- role: build-dependency
+  uid: optreginit
+- role: build-dependency
+  uid: optscibaud
+- role: build-dependency
+  uid: optlinkflags
+- role: build-dependency
+  uid: optmemflashorigin
+- role: build-dependency
+  uid: optmemflashsize
+- role: build-dependency
+  uid: optmemsdramorigin
+- role: build-dependency
+  uid: optmemsdramsize
+- role: build-dependency
+  uid: optmemsramorigin
+- role: build-dependency
+  uid: optmemsramsize
+- role: build-dependency
+  uid: linkcmdsmemory
+- role: build-dependency
+  uid: ../../linkcmds
+- role: build-dependency
+  uid: ../../obj
+- role: build-dependency
+  uid: ../../objirq
+- role: build-dependency
+  uid: ../../objmem
+- role: build-dependency
+  uid: ../../bspopts
+type: build
+use-after: []
+use-before: []

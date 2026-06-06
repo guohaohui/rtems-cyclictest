@@ -1,0 +1,21 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+actions:
+- get-integer: null
+- env-assign: null
+build-type: option
+copyrights:
+- Copyright (C) 2021 embedded brains GmbH & Co. KG
+default:
+- enabled-by: arm/imxrt1166-cm7-saltshaker
+  value: 0x0003ff00
+- enabled-by: true
+  value: 0x0001ff00
+description: |
+  Size of the ITCM in bytes.  Note that these sizes depend on fuses or software
+  settings done by a bootloader (together with DTCM and OCRAM).  The ITCM size
+  has to take the IMXRT_MEMORY_NULL_SIZE into account!
+enabled-by: true
+format: '{:#010x}'
+links: []
+name: IMXRT_MEMORY_ITCM_SIZE
+type: build

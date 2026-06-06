@@ -1,0 +1,17 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+build-type: objects
+cflags: []
+copyrights:
+- Copyright (C) 2024 embedded brains GmbH & Co. KG
+cppflags: []
+cxxflags: []
+enabled-by:
+  not:
+  - bsps/aarch64/xilinx-zynqmp
+  - bsps/arm/xilinx-zynq
+includes: []
+install: []
+links: []
+source:
+- testsuites/validation/tc-cache-disable-data.c
+type: build

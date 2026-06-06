@@ -1,0 +1,36 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+actions:
+- set-value: ${PROGRAM_PREFIX}gcc
+- substitute: null
+- find-program: null
+- env-assign: AS
+- env-assign: CC
+- env-assign: LINK_CC
+- set-value: ${PROGRAM_PREFIX}g++
+- substitute: null
+- find-program: null
+- env-assign: CXX
+- env-assign: LINK_CXX
+- set-value: ${PROGRAM_PREFIX}ar
+- substitute: null
+- find-program: null
+- env-assign: AR
+- set-value: ${PROGRAM_PREFIX}ld
+- substitute: null
+- find-program: null
+- env-assign: LD
+- script: |
+    conf.load("ar g++ gas gcc gccdeps")
+- set-value: -qrtems
+- env-append: LDFLAGS
+- env-append: PKGCONFIG_LDFLAGS
+build-type: option
+copyrights:
+- Copyright (C) 2020 embedded brains GmbH & Co. KG
+default: []
+description: ''
+enabled-by:
+- gcc
+links: []
+name: GCC
+type: build

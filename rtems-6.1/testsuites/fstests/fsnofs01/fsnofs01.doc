@@ -1,0 +1,73 @@
+# SPDX-License-Identifier: BSD-2-Clause
+
+#  COPYRIGHT (c) 2014.
+#  On-Line Applications Research Corporation (OAR).
+#  Cynthia Rempel <cynthia@rtems.org>
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions
+# are met:
+# 1. Redistributions of source code must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+# 2. Redistributions in binary form must reproduce the above copyright
+#    notice, this list of conditions and the following disclaimer in the
+#    documentation and/or other materials provided with the distribution.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+# ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+# LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+# CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+# SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+# INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+# CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+# ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+# POSSIBILITY OF SUCH DAMAGE.
+#
+This file describes the directives and concepts tested by this test set.
+
+test set name: fsnofs01
+
+directives:
+  + access
+  + chdir
+  + chmod
+  + chown
+  + chroot
+  + lchown
+  + link
+  + lstat
+  + mkdir
+  + mkfifo
+  + mknod
+  + open
+  + pathconf
+  + readlink
+  + rename
+  + rtems_chain_head
+  + rtems_chain_tail
+  + rtems_filesystem_global_location_obtain
+  + rtems_filesystem_global_location_release
+  + rtems_filesystem_location_copy
+  + rtems_filesystem_location_copy_and_detach
+  + rtems_filesystem_location_detach
+  + rtems_filesystem_location_free
+  + rtems_filesystem_global_location_obtain_null
+  + rtems_libio_set_private_env
+  + rtems_libio_use_global_env
+  + rmdir
+  + stat
+  + statvfs
+  + symlink
+  + truncate
+  + unlink
+  + utime
+
+  
+concepts:
+  + tests obtaining and replacing file system locations
+  + tests error handling of attempting to obtain and replace null file system
+    locations
+  + tests various calls to the filesystem
+  + tests user environment options
+

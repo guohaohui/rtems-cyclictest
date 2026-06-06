@@ -1,0 +1,34 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+actions:
+- set-test-state:
+    reason: null
+    state: exclude
+    tests:
+    - block08
+    - capture
+    - fileio
+    - iostream
+    - psxaio01
+    - psxaio02
+    - psxsignal07
+    - rtems
+    - sp16
+    - sp25
+    - sp42
+    - sp48
+    - sptimecounter02
+    - sptimecounter03
+    - tmcontext01
+    - tmfine01
+    - top
+    - utf8proc01
+build-type: option
+copyrights:
+- Copyright (C) 2020 embedded brains GmbH & Co. KG
+default: []
+description: ''
+enabled-by: true
+links:
+- role: build-dependency
+  uid: ../../tstsmallmem
+type: build

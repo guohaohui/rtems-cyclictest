@@ -1,0 +1,132 @@
+
+ SIS - SPARC/RISCV instruction simulator 2.30,  copyright Jiri Gaisler 2020
+ Bug-reports to jiri@gaisler.se
+
+ GR740/LEON4 emulation enabled, 4 cpus online, delta 50 clocks
+
+ Loaded build/sparc/gr740/testsuites/tmtests/tmfine01.exe, entry 0x00000000
+
+
+*** BEGIN OF TEST TMFINE 1 ***
+*** TEST VERSION: 6.0.0.4bca4100fc4f184b6638165675095808f109546a
+*** TEST STATE: EXPECTED_PASS
+*** TEST BUILD: RTEMS_SMP
+*** TEST TOOLS: 13.2.0 20230727 (RTEMS 6, RSB d3d738c35a71ca05f675b188539225099401ac79, Newlib a021448)
+*** BEGIN OF JSON DATA ***
+[
+  {
+    "type": "event",
+    "description": "Send Event to Self",
+    "counter": [
+      [172991],
+      [173266, 168815],
+      [173282, 168785, 168831],
+      [173276, 168779, 168779, 172240]
+    ]
+  }, {
+    "type": "event",
+    "description": "Send Event to One",
+    "counter": [
+      [172666],
+      [172666, 320222],
+      [172682, 304636, 304639],
+      [172676, 304626, 320241, 312574]
+    ]
+  }, {
+    "type": "contested-mutex",
+    "description": "Obtain/Release Contested Classic Inheritance Mutex",
+    "counter": [
+      [159961],
+      [12149, 12148],
+      [7529, 7529, 7528],
+      [5671, 5671, 5671, 5670]
+    ]
+  }, {
+    "type": "message",
+    "description": "Send Message to Self",
+    "counter": [
+      [94498],
+      [94506, 94612],
+      [94516, 94622, 94622],
+      [94513, 94620, 94619, 94615]
+    ]
+  }, {
+    "type": "message",
+    "description": "Send Message to One Receiver",
+    "counter": [
+      [94155],
+      [105077, 210425],
+      [91113, 182522, 182535],
+      [74015, 148307, 148308, 148292]
+    ]
+  }, {
+    "type": "private-mutex",
+    "description": "Obtain/Release Private Pthread Spinlock",
+    "counter": [
+      [648144],
+      [648120, 648744],
+      [648207, 648831, 648831],
+      [648183, 648808, 648808, 648779]
+    ]
+  }, {
+    "type": "private-mutex",
+    "description": "Obtain/Release Private <sys/lock.h> Mutex",
+    "counter": [
+      [317884],
+      [317869, 318174],
+      [317912, 318217, 318217],
+      [317901, 318206, 318206, 318193]
+    ]
+  }, {
+    "type": "private-mutex",
+    "description": "Obtain/Release Private Pthread Inheritance Mutex",
+    "counter": [
+      [219857],
+      [219843, 220056],
+      [219877, 220089, 220089],
+      [219868, 220080, 220081, 220066]
+    ]
+  }, {
+    "type": "private-mutex",
+    "description": "Obtain/Release Private Classic Inheritance Mutex",
+    "counter": [
+      [159957],
+      [159867, 160095],
+      [159923, 160107, 160107],
+      [159941, 160133, 160078, 160075]
+    ]
+  }, {
+    "type": "private-mutex",
+    "description": "Obtain/Release Private Pthread Ceiling Mutex",
+    "counter": [
+      [28740],
+      [27948, 27993],
+      [26941, 26973, 26973],
+      [21414, 21439, 21439, 21439]
+    ]
+  }, {
+    "type": "private-mutex",
+    "description": "Obtain/Release Private Classic Ceiling Mutex",
+    "counter": [
+      [27399],
+      [26819, 26841],
+      [26253, 26282, 26282],
+      [21187, 21215, 21214, 21214]
+    ]
+  }, {
+    "type": "private-mutex",
+    "description": "Obtain/Release Private Classic MrsP Mutex",
+    "counter": [
+      [26696],
+      [26074, 26074],
+      [24738, 24770, 24769],
+      [18947, 18970, 18970, 18968]
+    ]
+  }
+]
+*** END OF JSON DATA ***
+
+*** END OF TEST TMFINE 1 ***
+
+cpu 1 in error mode (tt = 0x80)
+ 2400642150  0000d760:  91d02000   ta  0x0

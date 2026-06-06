@@ -1,0 +1,19 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+actions:
+- get-integer: null
+- define: null
+build-type: option
+copyrights:
+- Copyright (C) 2020 embedded brains GmbH & Co. KG
+default:
+- enabled-by: m68k/COBRA5475
+  value: 132000000
+- enabled-by: true
+  value: 100000000
+description: |
+  The bus clock to be used inside the mcf54xx
+enabled-by: true
+format: '{}'
+links: []
+name: BSP_CPU_CLOCK_SPEED
+type: build

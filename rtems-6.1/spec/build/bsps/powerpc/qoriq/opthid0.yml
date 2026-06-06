@@ -1,0 +1,19 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+actions:
+- get-integer: null
+- define: null
+build-type: option
+copyrights:
+- Copyright (C) 2020 embedded brains GmbH & Co. KG
+default:
+- enabled-by:
+  - powerpc/qoriq_e6500_32
+  - powerpc/qoriq_e6500_64
+  value: 0x40000000
+description: |
+  initial HID0 value (EN_L2MMU_MHD is set by default on the T-series)
+enabled-by: true
+format: '{:#010x}'
+links: []
+name: QORIQ_INITIAL_HID0
+type: build

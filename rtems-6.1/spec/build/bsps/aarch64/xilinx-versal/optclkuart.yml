@@ -1,0 +1,19 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+actions:
+- get-integer: null
+- define: null
+build-type: option
+copyrights:
+- Copyright (C) 2021 Gedare Bloom <gedare@rtems.org>
+default:
+- enabled-by: aarch64/versal_qemu
+  value: 24000000
+- enabled-by: true
+  value: 100000000
+description: |
+  Versal UART clock frequency in Hz
+enabled-by: true
+format: '{}'
+links: []
+name: VERSAL_CLOCK_UART
+type: build

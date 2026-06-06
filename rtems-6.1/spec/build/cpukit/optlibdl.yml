@@ -1,0 +1,23 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+actions:
+- set-value: true
+- env-enable: null
+build-type: option
+copyrights:
+- Copyright (C) 2020 embedded brains GmbH & Co. KG
+default: []
+description: ''
+enabled-by:
+- aarch64
+- arm
+- i386
+- m68k
+- microblaze
+- mips
+- moxie
+- powerpc
+- riscv
+- sparc
+links: []
+name: BUILD_LIBDL
+type: build

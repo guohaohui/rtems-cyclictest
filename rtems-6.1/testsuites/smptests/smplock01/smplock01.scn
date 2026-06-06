@@ -1,0 +1,239 @@
+
+ SIS - SPARC/RISCV instruction simulator 2.30,  copyright Jiri Gaisler 2020
+ Bug-reports to jiri@gaisler.se
+
+ GR740/LEON4 emulation enabled, 4 cpus online, delta 50 clocks
+
+ Loaded build/sparc/gr740/testsuites/smptests/smplock01.exe, entry 0x00000000
+
+
+*** BEGIN OF TEST SMPLOCK 1 ***
+*** TEST VERSION: 6.0.0.90c8934179f2ba4c042caa95b3473d37835bed80
+*** TEST STATE: EXPECTED_PASS
+*** TEST BUILD: RTEMS_SMP
+*** TEST TOOLS: 13.2.0 20230727 (RTEMS 6, RSB d3d738c35a71ca05f675b188539225099401ac79, Newlib a021448)
+*** BEGIN OF JSON DATA ***
+[
+  {
+    "lock-type": "Ticket Lock",
+    "lock-object": "global",
+    "section-type": "local counter",
+    "results": [
+      {
+        "counter": [1385097],
+        "global-counter": 0,
+        "sum-of-local-counter": 1385097
+      }, {
+        "counter": [997876, 997974],
+        "global-counter": 0,
+        "sum-of-local-counter": 1995850
+      }, {
+        "counter": [998024, 998123, 998123],
+        "global-counter": 0,
+        "sum-of-local-counter": 2994270
+      }, {
+        "counter": [997988, 998086, 998086, 998086],
+        "global-counter": 0,
+        "sum-of-local-counter": 3992246
+      }
+    ]
+  }, {
+    "lock-type": "MCS Lock",
+    "lock-object": "global",
+    "section-type": "local counter",
+    "results": [
+      {
+        "counter": [1512045],
+        "global-counter": 0,
+        "sum-of-local-counter": 1512045
+      }, {
+        "counter": [997877, 997878],
+        "global-counter": 0,
+        "sum-of-local-counter": 1995755
+      }, {
+        "counter": [998023, 998122, 998122],
+        "global-counter": 0,
+        "sum-of-local-counter": 2994267
+      }, {
+        "counter": [997987, 998086, 998086, 998086],
+        "global-counter": 0,
+        "sum-of-local-counter": 3992245
+      }
+    ]
+  }, {
+    "lock-type": "Ticket Lock",
+    "lock-object": "global",
+    "section-type": "global counter",
+    "results": [
+      {
+        "counter": [997921, 997945, 997945, 997945],
+        "global-counter": 3991756,
+        "sum-of-local-counter": 3991756
+      }
+    ]
+  }, {
+    "lock-type": "MCS Lock",
+    "lock-object": "global",
+    "section-type": "global counter",
+    "results": [
+      {
+        "counter": [527090, 527096, 527096, 527096],
+        "global-counter": 2108378,
+        "sum-of-local-counter": 2108378
+      }
+    ]
+  }, {
+    "lock-type": "Ticket Lock",
+    "lock-object": "local",
+    "section-type": "local counter",
+    "results": [
+      {
+        "counter": [1385769],
+        "global-counter": 0,
+        "sum-of-local-counter": 1385769
+      }, {
+        "counter": [1385995, 1387328],
+        "global-counter": 0,
+        "sum-of-local-counter": 2773323
+      }, {
+        "counter": [1386191, 1387525, 1387526],
+        "global-counter": 0,
+        "sum-of-local-counter": 4161242
+      }, {
+        "counter": [1386136, 1387468, 1387470, 1387407],
+        "global-counter": 0,
+        "sum-of-local-counter": 5548481
+      }
+    ]
+  }, {
+    "lock-type": "MCS Lock",
+    "lock-object": "local",
+    "section-type": "local counter",
+    "results": [
+      {
+        "counter": [1512021],
+        "global-counter": 0,
+        "sum-of-local-counter": 1512021
+      }, {
+        "counter": [1511993, 1513445],
+        "global-counter": 0,
+        "sum-of-local-counter": 3025438
+      }, {
+        "counter": [1512208, 1513656, 1513656],
+        "global-counter": 0,
+        "sum-of-local-counter": 4539520
+      }, {
+        "counter": [1512149, 1513595, 1513595, 1513533],
+        "global-counter": 0,
+        "sum-of-local-counter": 6052872
+      }
+    ]
+  }, {
+    "lock-type": "Ticket Lock",
+    "lock-object": "local",
+    "section-type": "global counter",
+    "results": [
+      {
+        "counter": [1160403, 1161527, 1161527, 1161469],
+        "global-counter": 3727827,
+        "sum-of-local-counter": 4644926
+      }
+    ]
+  }, {
+    "lock-type": "MCS Lock",
+    "lock-object": "local",
+    "section-type": "global counter",
+    "results": [
+      {
+        "counter": [1247164, 1248373, 1248373, 1248313],
+        "global-counter": 3876384,
+        "sum-of-local-counter": 4992223
+      }
+    ]
+  }, {
+    "lock-type": "Ticket Lock",
+    "lock-object": "global",
+    "section-type": "busy loop",
+    "results": [
+      {
+        "counter": [39932, 39932, 39932, 39932],
+        "global-counter": 0,
+        "sum-of-local-counter": 159728
+      }
+    ]
+  }, {
+    "lock-type": "MCS Lock",
+    "lock-object": "global",
+    "section-type": "busy loop",
+    "results": [
+      {
+        "counter": [39934, 39935, 39934, 39934],
+        "global-counter": 0,
+        "sum-of-local-counter": 159737
+      }
+    ]
+  }, {
+    "lock-type": "Sequence Lock",
+    "lock-object": "global",
+    "section-type": "two global counter",
+    "results": [
+      {
+        "counter": [1847772, 666526, 666526, 666488],
+        "global-counter": 0,
+        "sum-of-local-counter": 3847312
+      }
+    ]
+  }, {
+    "lock-type": "TAS Lock",
+    "lock-object": "global",
+    "section-type": "local counter",
+    "results": [
+      {
+        "counter": [2934600],
+        "global-counter": 0,
+        "sum-of-local-counter": 2934600
+      }, {
+        "counter": [2217444, 2219107],
+        "global-counter": 0,
+        "sum-of-local-counter": 4436551
+      }, {
+        "counter": [1833240, 1836467, 1835261],
+        "global-counter": 0,
+        "sum-of-local-counter": 5504968
+      }, {
+        "counter": [1652247, 1652937, 1653163, 1652725],
+        "global-counter": 0,
+        "sum-of-local-counter": 6611072
+      }
+    ]
+  }, {
+    "lock-type": "TTAS Lock",
+    "lock-object": "global",
+    "section-type": "local counter",
+    "results": [
+      {
+        "counter": [2935135],
+        "global-counter": 0,
+        "sum-of-local-counter": 2935135
+      }, {
+        "counter": [1732426, 1758193],
+        "global-counter": 0,
+        "sum-of-local-counter": 3490619
+      }, {
+        "counter": [1202763, 1204087, 1203894],
+        "global-counter": 0,
+        "sum-of-local-counter": 3610744
+      }, {
+        "counter": [845721, 846759, 848543, 838946],
+        "global-counter": 0,
+        "sum-of-local-counter": 3379969
+      }
+    ]
+  }
+]
+*** END OF JSON DATA ***
+
+*** END OF TEST SMPLOCK 1 ***
+
+cpu 0 in error mode (tt = 0x80)
+ 1550147550  000091c0:  91d02000   ta  0x0

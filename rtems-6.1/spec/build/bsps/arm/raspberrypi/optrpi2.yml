@@ -1,0 +1,18 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+actions:
+- get-boolean: null
+- define-condition: null
+build-type: option
+copyrights:
+- Copyright (C) 2020 embedded brains GmbH & Co. KG
+default:
+- enabled-by: arm/raspberrypi2
+  value: true
+- enabled-by: true
+  value: false
+description: |
+  Set if the BSP variant is Raspberry Pi 2.
+enabled-by: true
+links: []
+name: BSP_IS_RPI2
+type: build

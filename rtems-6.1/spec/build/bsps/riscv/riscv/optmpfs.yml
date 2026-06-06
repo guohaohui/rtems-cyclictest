@@ -1,0 +1,20 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+actions:
+- get-boolean: null
+- define-condition: null
+build-type: option
+copyrights:
+- Copyright (C) 2020 embedded brains GmbH & Co. KG
+default:
+- enabled-by: riscv/beaglevfire
+  value: true
+- enabled-by: riscv/mpfs64imafdc
+  value: true
+- enabled-by: true
+  value: false
+description: |
+  enables support Microchip PolarFire SoC if defined to a non-zero value,otherwise it is disabled (disabled by default)
+enabled-by: true
+links: []
+name: RISCV_ENABLE_MPFS_SUPPORT
+type: build

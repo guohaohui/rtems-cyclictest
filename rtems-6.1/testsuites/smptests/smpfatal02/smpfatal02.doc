@@ -1,0 +1,13 @@
+This file describes the directives and concepts tested by this test set.
+
+test set name: smpfatal02
+
+directives:
+
+  - _Terminate()
+  - _SMP_Start_multitasking_on_secondary_processor()
+
+concepts:
+
+  - Ensure that the system termination in case of fatal errors during driver
+    initialization works.

@@ -1,0 +1,22 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+actions:
+- get-string: null
+- define-unquoted: null
+build-type: option
+copyrights:
+- Copyright (C) 2020 embedded brains GmbH & Co. KG
+default:
+- enabled-by:
+  - arm/lpc32xx_mzx
+  - arm/lpc32xx_mzx_stage_1
+  - arm/lpc32xx_mzx_stage_2
+  value: USB_OTG_VBUS_POWER_WITH_CHARGE_PUMP
+- enabled-by: true
+  value: false
+description: |
+  USB OTG transceiver VBUS policy
+enabled-by: true
+format: '{}'
+links: []
+name: BSP_USB_OTG_TRANSCEIVER_VBUS
+type: build

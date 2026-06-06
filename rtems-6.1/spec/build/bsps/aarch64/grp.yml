@@ -1,0 +1,23 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+build-type: group
+cflags: []
+copyrights:
+- Copyright (C) 2020 On-Line Applications Research (OAR)
+cppflags: []
+cxxflags: []
+enabled-by: true
+includes: []
+install:
+- destination: ${BSP_INCLUDEDIR}/bsp
+  source:
+  - bsps/aarch64/include/bsp/linker-symbols-arch.h
+  - bsps/aarch64/include/bsp/start.h
+  - bsps/include/bsp/linker-symbols.h
+- destination: ${BSP_LIBDIR}
+  source:
+  - bsps/aarch64/shared/start/linkcmds.base
+ldflags: []
+links: []
+type: build
+use-after: []
+use-before: []

@@ -1,0 +1,30 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+actions:
+- get-integer: null
+- define: null
+build-type: option
+copyrights:
+- Copyright (C) 2022 embedded brains GmbH & Co. KG
+default:
+- enabled-by:
+  - aarch64/a53_ilp32_qemu
+  - aarch64/a53_lp64_qemu
+  - aarch64/a72_ilp32_qemu
+  - aarch64/a72_lp64_qemu
+  - aarch64/raspberrypi4b
+  - aarch64/versal_aiedge
+  - aarch64/versal_qemu
+  - aarch64/versal_vck190
+  - bsps/aarch64/xilinx-zynqmp
+  value: null
+- enabled-by: true
+  value: 0x00000002
+description: |
+  Defines the initial value of the ICC_BPR0 register of the ARM GIC CPU
+  Interface.  The value is optional.  If it is not defined, then the register
+  is not initialized.
+enabled-by: true
+format: '{:#010x}'
+links: []
+name: BSP_ARM_GIC_ICC_BPR0
+type: build

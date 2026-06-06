@@ -1,0 +1,28 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+actions:
+- get-boolean: null
+- env-enable: null
+- define-condition: null
+build-type: option
+copyrights:
+- Copyright (C) 2020 embedded brains GmbH & Co. KG
+default:
+- enabled-by: true
+  value: false
+description: |
+  If set to "True", then the message passing based multiprocessing support
+  (MPCI) is enabled, otherwise it is disabled.  Do not confuse this with the
+  SMP support which is enabled by the RTEMS_SMP option.
+enabled-by:
+- m68k/mvme147s
+- powerpc/psim
+- powerpc/qoriq_core_0
+- powerpc/qoriq_core_1
+- sparc/gr712rc
+- sparc/gr740
+- sparc/leon3
+- sparc/ut699
+- sparc/ut700
+links: []
+name: RTEMS_MULTIPROCESSING
+type: build

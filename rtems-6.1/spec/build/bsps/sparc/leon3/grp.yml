@@ -1,0 +1,65 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+build-type: group
+cflags: []
+copyrights:
+- Copyright (C) 2020 embedded brains GmbH & Co. KG
+cppflags: []
+cxxflags: []
+enabled-by: true
+includes: []
+install: []
+ldflags: []
+links:
+- role: build-dependency
+  uid: ../../linkcmds
+- role: build-dependency
+  uid: ../../obj
+- role: build-dependency
+  uid: ../../objgrlib
+- role: build-dependency
+  uid: ../../objirq
+- role: build-dependency
+  uid: ../objmem
+- role: build-dependency
+  uid: ../grp
+- role: build-dependency
+  uid: abiclang
+- role: build-dependency
+  uid: abi
+- role: build-dependency
+  uid: obj
+- role: build-dependency
+  uid: objmpci
+- role: build-dependency
+  uid: objsmp
+- role: build-dependency
+  uid: optapbuartbase
+- role: build-dependency
+  uid: optasrupcnt
+- role: build-dependency
+  uid: optasrupcntprobe
+- role: build-dependency
+  uid: optdsubase
+- role: build-dependency
+  uid: optgptimerbase
+- role: build-dependency
+  uid: optirqampbase
+- role: build-dependency
+  uid: optirqampextirq
+- role: build-dependency
+  uid: optirqampts
+- role: build-dependency
+  uid: optconirq
+- role: build-dependency
+  uid: optl2cachebase
+- role: build-dependency
+  uid: optleon3smp
+- role: build-dependency
+  uid: optplbfreq
+- role: build-dependency
+  uid: ../start
+- role: build-dependency
+  uid: ../../bspopts
+type: build
+use-after: []
+use-before: []

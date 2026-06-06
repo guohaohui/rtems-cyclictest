@@ -1,0 +1,20 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+actions:
+- get-boolean: null
+- define-condition: null
+build-type: option
+copyrights:
+- Copyright (C) 2020 embedded brains GmbH & Co. KG
+default:
+- enabled-by:
+  - arm/lpc2362
+  - arm/lpc23xx_tli800
+  value: true
+- enabled-by: true
+  value: false
+description: |
+  enable heap extend by Ethernet and USB regions
+enabled-by: true
+links: []
+name: LPC24XX_HEAP_EXTEND
+type: build

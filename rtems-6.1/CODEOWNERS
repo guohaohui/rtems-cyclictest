@@ -1,0 +1,261 @@
+# Please keep users, directories and files  sorted alphabetically.
+# Directories first
+#
+# If there is more than 1 user in a section it must be promoted to a group in
+# /approvers
+
+[General Maintainer] @approvers/general/maintainer
+*
+
+[Documentation] @approvers/docs
+*/README
+*.md
+*.rst
+*.txt
+
+
+# CPUKit
+########
+
+[CPUKit libdebugger] @approvers/cpukit/libdebugger
+/cpukit/libdebugger
+
+[CPUKit libdl] @approvers/cpukit/libdl
+/cpukit/libdl
+
+[CPUKit libdrvmgr] @approvers/cpukit/libdrvmgr
+/cpukit/libdrvmgr
+
+[CPUKit libgnat] @joel
+/cpukit/libgnat
+
+[CPUKit librtemscxx] @approvers/cpukit/librtemscxx
+/cpukit/librtemscxx
+
+[CPUKit libstdthreads] @approvers/cpukit/libstdthreads
+/cpukit/libstdthreads
+
+
+# Architectures
+###############
+
+[Arch AArch64] @approvers/arch/aarch64
+/bsps/aarch64/
+/cpukit/score/cpu/aarch64/
+/spec/build/bsps/aarch64/
+/cpukit/libdebugger/rtems-debugger-aarch64.v
+/cpukit/libdl/rtl-mdreloc-aarch64.c
+/spec/build/cpukit/*aarch64.yml
+*/README  @approvers/docs
+*.md  @approvers/docs
+*.rst  @approvers/docs
+*.txt  @approvers/docs
+
+
+[Arch ARM] @approvers/arch/arm
+/bsps/arm/
+/bsps/include/arm/
+/bsps/include/xil/arm/
+/bsps/shared/freebsd/sys/arm/
+/bsps/shared/xil/arm/
+/cpukit/score/cpu/arm/
+/spec/build/bsps/arm/
+/cpukit/libdebugger/rtems-debugger-arm.c
+/cpukit/libdl/*arm*
+/spec/build/cpukit/*arm.yml
+*/README  @approvers/docs
+*.md  @approvers/docs
+*.rst  @approvers/docs
+*.txt  @approvers/docs
+
+
+[Arch Blackfin] @approvers/arch/bfin
+/bsps/bfin/
+/cpukit/score/cpu/bfin/
+/spec/build/bsps/bfin/
+/cpukit/libdl/rtl-mdreloc-bfin.c
+/spec/build/cpukit/cpubfin.yml
+*/README  @approvers/docs
+*.md  @approvers/docs
+*.rst  @approvers/docs
+*.txt  @approvers/docs
+
+
+[Arch i386] @approvers/arch/i386
+/bsps/i386/
+/cpukit/score/cpu/i386/
+/spec/build/bsps/i386/
+/cpukit/libdebugger/rtems-debugger-i386.c
+/cpukit/libdl/rtl-mdreloc-i386.c
+/spec/build/cpukit/*i386*
+*/README  @approvers/docs
+*.md  @approvers/docs
+*.rst  @approvers/docs
+*.txt  @approvers/docs
+
+
+[Arch LatticeMico32] @approvers/arch/lm32
+/bsps/lm32/
+/cpukit/score/cpu/lm32/
+/spec/build/bsps/lm32/
+/cpukit/libdl/rtl-mdreloc-lm32.c
+/spec/build/cpukit/cpulm32.yml
+*/README  @approvers/docs
+*.md  @approvers/docs
+*.rst  @approvers/docs
+*.txt  @approvers/docs
+
+
+[Arch Motorola 68000] @approvers/arch/m68k
+/bsps/m68k/
+/cpukit/score/cpu/m68k/
+/spec/build/bsps/m68k/
+/cpukit/libdl/rtl-mdreloc-m68k.c
+/spec/build/cpukit/*m68k*
+*/README  @approvers/docs
+*.md  @approvers/docs
+*.rst  @approvers/docs
+*.txt  @approvers/docs
+
+
+[Arch MicroBlaze] @approvers/arch/microblaze
+/bsps/include/xil/microblaze/
+/bsps/microblaze/
+/cpukit/score/cpu/microblaze/
+/spec/build/bsps/microblaze/
+/cpukit/libdebugger/rtems-debugger-microblaze.c
+/cpukit/libdl/rtl-mdreloc-microblaze.c
+/spec/build/cpukit/*microblaze*
+*/README  @approvers/docs
+*.md  @approvers/docs
+*.rst  @approvers/docs
+*.txt  @approvers/docs
+
+
+[Arch MIPS] @approvers/arch/mips
+/bsps/mips/
+/cpukit/score/cpu/mips/
+/spec/build/bsps/mips/
+/cpukit/libdl/rtl-mdreloc-mips.c
+/spec/build/cpukit/*mips.yml
+*/README  @approvers/docs
+*.md  @approvers/docs
+*.rst  @approvers/docs
+*.txt  @approvers/docs
+
+
+[Arch Moxie] @approvers/arch/moxie
+/bsps/moxie/
+/cpukit/score/cpu/moxie/
+/spec/build/bsps/moxie/
+/cpukit/libdl/rtl-mdreloc-moxie.c
+/spec/build/cpukit/*moxie.yml
+*/README  @approvers/docs
+*.md  @approvers/docs
+*.rst  @approvers/docs
+*.txt  @approvers/docs
+
+
+[Arch Nios II] @approvers/arch/nios2
+/bsps/nios2/
+/cpukit/score/cpu/nios2/
+/spec/build/bsps/nios2/
+/spec/build/cpukit/*nios2.yml
+*/README  @approvers/docs
+*.md  @approvers/docs
+*.rst  @approvers/docs
+*.txt  @approvers/docs
+
+
+[Arch OpenRISC 1000] @approvers/arch/or1k
+/bsps/or1k/
+/cpukit/score/cpu/or1k/
+/spec/build/bsps/or1k/
+/spec/build/cpukit/*or1k.yml
+*/README  @approvers/docs
+*.md  @approvers/docs
+*.rst  @approvers/docs
+*.txt  @approvers/docs
+
+
+[Arch PowerPC] @approvers/arch/powerpc
+/bsps/powerpc/
+/cpukit/score/cpu/powerpc/
+/spec/build/bsps/powerpc/
+/cpukit/libdl/rtl-mdreloc-powerpc.c
+/spec/build/cpukit/*powerpc.yml
+*/README  @approvers/docs
+*.md  @approvers/docs
+*.rst  @approvers/docs
+*.txt  @approvers/docs
+
+
+[Arch RISC-V] @approvers/arch/risc-v
+/bsps/riscv
+/cpukit/score/cpu/riscv
+/spec/build/bsps/riscv
+/cpukit/libdl/rtl-mdreloc-riscv.c
+/spec/build/cpukit/*riscv.yml
+*/README  @approvers/docs
+*.md  @approvers/docs
+*.rst  @approvers/docs
+*.txt  @approvers/docs
+
+
+[Arch SuperH] @approvers/arch/superh
+/bsps/sh/
+/cpukit/score/cpu/sh/
+/spec/build/bsps/sh/
+/spec/build/cpukit/cpush.yml
+*/README  @approvers/docs
+*.md  @approvers/docs
+*.rst  @approvers/docs
+*.txt  @approvers/docs
+
+
+[Arch SPARC] @approvers/arch/sparc
+/bsps/sparc/
+/cpukit/score/cpu/sparc/
+/spec/build/bsps/sparc/
+/spec/build/cpukit/cpusparc.yml
+/spec/build/cpukit/objdlsparc.yml
+/spec/build/testsuites/validation/bsps/*-sparc-*
+/testsuites/validation/bsps/*-sparc-*
+*/README  @approvers/docs
+*.md  @approvers/docs
+*.rst  @approvers/docs
+*.txt  @approvers/docs
+
+
+[Arch SPARC64] @approvers/arch/sparc64
+/bsps/sparc64/
+/cpukit/score/cpu/sparc64/
+/spec/build/bsps/sparc64/
+/spec/build/cpukit/*sparc64.yml
+*/README  @approvers/docs
+*.md  @approvers/docs
+*.rst  @approvers/docs
+*.txt  @approvers/docs
+
+
+[Arch V850] @approvers/arch/v850
+/bsps/v850/
+/cpukit/score/cpu/v850/
+/spec/build/bsps/v850/
+/cpukit/libdl/rtl-mdreloc-v850.c
+/spec/build/cpukit/*v850.yml
+*/README  @approvers/docs
+*.md  @approvers/docs
+*.rst  @approvers/docs
+*.txt  @approvers/docs
+
+
+[Arch X86_64] @approvers/arch/x86_64
+/bsps/x86_64/
+/cpukit/score/cpu/x86_64/
+/spec/build/bsps/x86_64/
+/spec/build/cpukit/*x8664.yml
+*/README  @approvers/docs
+*.md  @approvers/docs
+*.rst  @approvers/docs
+*.txt  @approvers/docs

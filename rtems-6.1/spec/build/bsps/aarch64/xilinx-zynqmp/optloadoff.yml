@@ -1,0 +1,24 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+actions:
+- get-integer: null
+- assert-uint32: null
+- env-assign: null
+- format-and-define: null
+build-type: option
+copyrights:
+- Copyright (C) 2020 On-Line Applications Research (OAR)
+default:
+- enabled-by:
+  - aarch64/zynqmp_apu
+  - aarch64/zynqmp_apu_ilp32
+  - aarch64/zynqmp_cfc400x
+  value: 0x00000000
+- enabled-by: true
+  value: 0x00008000
+description: |
+  offset of RAM region from memory area base
+enabled-by: true
+format: '{:#010x}'
+links: []
+name: BSP_XILINX_ZYNQMP_LOAD_OFFSET
+type: build

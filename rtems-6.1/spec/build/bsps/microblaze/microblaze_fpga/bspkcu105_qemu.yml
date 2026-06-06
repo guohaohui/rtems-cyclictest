@@ -1,0 +1,22 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+arch: microblaze
+bsp: kcu105_qemu
+build-type: bsp
+cflags: []
+copyrights:
+- Copyright (C) 2021 On-Line Applications Research Corporation (OAR)
+cppflags: []
+enabled-by: true
+family: microblaze_fpga
+includes: []
+install: []
+links:
+- role: build-dependency
+  uid: tstkcu105_qemu
+- role: build-dependency
+  uid: ../../opto0
+- role: build-dependency
+  uid: grp
+source:
+- bsps/microblaze/microblaze_fpga/start/bspreset.c
+type: build

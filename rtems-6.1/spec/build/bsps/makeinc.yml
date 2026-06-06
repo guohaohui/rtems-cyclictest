@@ -1,0 +1,64 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+build-type: config-file
+content: |
+  #
+  # BSP specific settings. To be included in application Makefiles
+  #
+  # This support will be removed from RTEMS. Please consider other
+  # ways to build applications.
+  #
+
+  RTEMS_API = ${__RTEMS_MAJOR__}
+  RTEMS_CPU = ${ARCH}
+  RTEMS_BSP = ${BSP_NAME}
+  RTEMS_ROOT ?= ${PREFIX}
+
+  prefix = $$(RTEMS_ROOT)
+  exec_prefix = $$(prefix)/$$(RTEMS_CPU)-rtems$$(RTEMS_API)
+
+  CC_FOR_TARGET = ${PROGRAM_PREFIX}gcc
+  CXX_FOR_TARGET = ${PROGRAM_PREFIX}g++
+  AS_FOR_TARGET = ${PROGRAM_PREFIX}as
+  AR_FOR_TARGET = ${PROGRAM_PREFIX}ar
+  NM_FOR_TARGET = ${PROGRAM_PREFIX}nm
+  LD_FOR_TARGET = ${PROGRAM_PREFIX}ld
+  SIZE_FOR_TARGET = ${PROGRAM_PREFIX}size
+  OBJCOPY_FOR_TARGET = ${PROGRAM_PREFIX}objcopy
+
+  CC= $$(CC_FOR_TARGET)
+  CXX= $$(CXX_FOR_TARGET)
+  AS= $$(AS_FOR_TARGET)
+  LD= $$(LD_FOR_TARGET)
+  NM= $$(NM_FOR_TARGET)
+  AR= $$(AR_FOR_TARGET)
+  SIZE= $$(SIZE_FOR_TARGET)
+  OBJCOPY= $$(OBJCOPY_FOR_TARGET)
+
+  export CC
+  export CXX
+  export AS
+  export LD
+  export NM
+  export AR
+  export SIZE
+  export OBJCOPY
+
+  PROJECT_ROOT = $$(RTEMS_ROOT)
+  RTEMS_CUSTOM = $$(RTEMS_ROOT)/make/custom/$$(RTEMS_BSP).cfg
+  RTEMS_SHARE  = $$(RTEMS_ROOT)/share/rtems$$(RTEMS_API)
+
+  RTEMS_USE_OWN_PDIR = no
+  RTEMS_HAS_POSIX_API = ${RTEMS_HAS_POSIX_API}
+  RTEMS_HAS_ITRON_API = no
+  RTEMS_HAS_CPLUSPLUS = yes
+
+  export RTEMS_BSP
+  export RTEMS_CUSTOM
+  export PROJECT_ROOT
+copyrights:
+- Copyright (C) 2020 embedded brains GmbH & Co. KG
+enabled-by: true
+install-path: ${PREFIX}/${ARCH}-rtems${__RTEMS_MAJOR__}/${BSP_NAME}
+links: []
+target: Makefile.inc
+type: build

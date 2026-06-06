@@ -1,0 +1,89 @@
+/* SPDX-License-Identifier: BSD-2-Clause */
+
+/*
+ * Copyright (c) 2020 Niteesh G S <niteesh.gs@gmail.com>.  All rights reserved.
+ * Copyright (c) 2015 embedded brains GmbH & Co. KG
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ */
+
+/dts-v1/;
+
+/ {
+	compatible = "a,b";
+	#address-cells = <1>;
+	#size-cells = <2>;
+	model = "c";
+
+	d {
+		e = "f";
+		g;
+
+		h@0 {
+		};
+
+		h@1 {
+			w = <123>;
+		};
+	};
+
+	aliases {
+		k = "/m@1248";
+	};
+
+	l: m@1248 {
+		n = <0xdeadbeef 0x12345678>;
+
+		o {
+			p;
+		};
+
+		q {
+			r = "s";
+		};
+	};
+
+	t {
+		u = <&l>;
+	};
+
+	a {
+		compatible = "a";
+		reg = <0x1234 0x10>;
+		ranges = <0x1000 0x8000 0x400 0x2000 0xF000 0x1000>;
+		interrupts = <0x1>;
+
+		b {
+			reg = <0x1234 0x10 0x2468 0x10>;
+		};
+	};
+
+	c {
+		ranges;
+		interrupts = <0x1 0x2 0x3>;
+
+		q {
+			reg = <0x4800 0x200>;
+			status = "okay";
+		};
+	};
+};

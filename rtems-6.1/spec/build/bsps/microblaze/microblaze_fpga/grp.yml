@@ -1,0 +1,81 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+build-type: group
+cflags: []
+copyrights:
+- Copyright (C) 2021 On-Line Applications Research Corporation (OAR)
+cppflags: []
+cxxflags: []
+enabled-by: true
+includes: []
+install: []
+ldflags: []
+links:
+- role: build-dependency
+  uid: ../grp
+- role: build-dependency
+  uid: abi
+- role: build-dependency
+  uid: obj
+- role: build-dependency
+  uid: start
+- role: build-dependency
+  uid: optconsoleinterrupts
+- role: build-dependency
+  uid: optdcachebaseaddress
+- role: build-dependency
+  uid: optdcachelinelen
+- role: build-dependency
+  uid: optdcachesize
+- role: build-dependency
+  uid: optdtbheaderpath
+- role: build-dependency
+  uid: opticachebaseaddress
+- role: build-dependency
+  uid: opticachelinelen
+- role: build-dependency
+  uid: opticachesize
+- role: build-dependency
+  uid: optintcbaseaddress
+- role: build-dependency
+  uid: optmaxuarts
+- role: build-dependency
+  uid: optramlen
+- role: build-dependency
+  uid: optspibaseaddress
+- role: build-dependency
+  uid: optspiirq
+- role: build-dependency
+  uid: opttimerbaseaddress
+- role: build-dependency
+  uid: opttimerfrequency
+- role: build-dependency
+  uid: optuartlitebaseaddress
+- role: build-dependency
+  uid: optuseuart
+- role: build-dependency
+  uid: optuartirq
+- role: build-dependency
+  uid: optuartirq
+- role: build-dependency
+  uid: optconsoleuart
+- role: build-dependency
+  uid: optusefdt
+- role: build-dependency
+  uid: ../../obj
+- role: build-dependency
+  uid: ../../objdevspixil
+- role: build-dependency
+  uid: ../../objirq
+- role: build-dependency
+  uid: ../../objmem
+- role: build-dependency
+  uid: linkcmds
+- role: build-dependency
+  uid: ../../bspopts
+- role: build-dependency
+  uid: ../../optfdtuboot
+- role: build-dependency
+  uid: ../../optfdtmxsz
+type: build
+use-after: []
+use-before: []

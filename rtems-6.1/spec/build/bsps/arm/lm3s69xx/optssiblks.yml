@@ -1,0 +1,25 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+actions:
+- get-integer: null
+- define: null
+build-type: option
+copyrights:
+- Copyright (C) 2020 embedded brains GmbH & Co. KG
+default:
+- enabled-by: arm/lm3s3749
+  value: 2
+- enabled-by:
+  - arm/lm3s6965
+  - arm/lm3s6965_qemu
+  value: 1
+- enabled-by: arm/lm4f120
+  value: 4
+- enabled-by: true
+  value: 0
+description: |
+  number of SSI blocks supported by MCU
+enabled-by: true
+format: '{}'
+links: []
+name: LM3S69XX_NUM_SSI_BLOCKS
+type: build

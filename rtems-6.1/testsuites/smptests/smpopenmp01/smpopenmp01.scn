@@ -1,0 +1,64 @@
+
+ SIS - SPARC/RISCV instruction simulator 2.30,  copyright Jiri Gaisler 2020
+ Bug-reports to jiri@gaisler.se
+
+ GR740/LEON4 emulation enabled, 4 cpus online, delta 50 clocks
+
+ Loaded build/sparc/gr740/testsuites/smptests/smpopenmp01.exe, entry 0x00000000
+
+
+*** BEGIN OF TEST SMPOPENMP 1 ***
+*** TEST VERSION: 6.0.0.43eecff0b1b2915b87d5324ae562888851cabdaf
+*** TEST STATE: EXPECTED_PASS
+*** TEST BUILD: RTEMS_SMP
+*** TEST TOOLS: 13.2.0 20230727 (RTEMS 6, RSB d3d738c35a71ca05f675b188539225099401ac79, Newlib a021448)
+*** BEGIN OF JSON DATA ***
+[
+  {
+    "num-threads": 1,
+    "major-loop-count": 1,
+    "barrier-bench": 0.269517,
+    "parallel-bench": 1.277477,
+    "static-bench": 0.073541,
+    "dynamic-bench": 0.118271,
+    "guided-bench": 0.008089,
+    "runtime-bench": 0.142307,
+    "single-bench": 0.034294
+  }, {
+    "num-threads": 2,
+    "major-loop-count": 1,
+    "barrier-bench": 0.269345,
+    "parallel-bench": 0.557423,
+    "static-bench": 0.033622,
+    "dynamic-bench": 0.059762,
+    "guided-bench": 0.004065,
+    "runtime-bench": 0.072107,
+    "single-bench": 0.033129
+  }, {
+    "num-threads": 3,
+    "major-loop-count": 1,
+    "barrier-bench": 0.271522,
+    "parallel-bench": 0.631576,
+    "static-bench": 0.036074,
+    "dynamic-bench": 0.039981,
+    "guided-bench": 0.002757,
+    "runtime-bench": 0.049072,
+    "single-bench": 0.033129
+  }, {
+    "num-threads": 4,
+    "major-loop-count": 1,
+    "barrier-bench": 0.272048,
+    "parallel-bench": 0.705746,
+    "static-bench": 0.039061,
+    "dynamic-bench": 0.030069,
+    "guided-bench": 0.002095,
+    "runtime-bench": 0.037570,
+    "single-bench": 0.033176
+  }
+]
+*** END OF JSON DATA ***
+
+*** END OF TEST SMPOPENMP 1 ***
+
+cpu 0 in error mode (tt = 0x80)
+ 706370700  0000cac0:  91d02000   ta  0x0

@@ -1,0 +1,17 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+actions:
+- get-integer: null
+- define: null
+build-type: option
+copyrights:
+- Copyright (C) 2020 embedded brains GmbH & Co. KG
+default:
+- enabled-by: powerpc/mpc5566evb
+  value: 193
+description: |
+  IRQ pin for SMSC9218I network interface
+enabled-by: true
+format: '{}'
+links: []
+name: SMSC9218I_IRQ_PIN
+type: build

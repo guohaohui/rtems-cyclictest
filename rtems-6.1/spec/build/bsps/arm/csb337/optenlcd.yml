@@ -1,0 +1,17 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+actions:
+- get-boolean: null
+- define-condition: null
+- env-enable: null
+build-type: option
+copyrights:
+- Copyright (C) 2020 embedded brains GmbH & Co. KG
+default:
+- enabled-by: true
+  value: false
+description: |
+  If defined, enable use of the SED1356 controller and LCD.
+enabled-by: true
+links: []
+name: ENABLE_LCD
+type: build

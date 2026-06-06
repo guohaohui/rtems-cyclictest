@@ -1,0 +1,33 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+build-type: objects
+cflags: []
+copyrights:
+- Copyright (C) 2020 embedded brains GmbH & Co. KG
+cppflags: []
+cxxflags: []
+enabled-by: TMS570_USE_HWINIT_STARTUP
+includes: []
+install:
+- destination: ${BSP_INCLUDEDIR}/bsp/ti_herc
+  source:
+  - bsps/arm/tms570/include/bsp/ti_herc/errata_SSWF021_45.h
+links:
+- role: build-dependency
+  uid: objhwinitls3137hdk
+- role: build-dependency
+  uid: objhwinitlc4357hdk
+source:
+- bsps/arm/tms570/start/bspstarthooks.c
+- bsps/arm/tms570/start/bspstarthooks-hwinit.c
+- bsps/arm/tms570/start/errata_SSWF021_45.c
+- bsps/arm/tms570/start/fail_notification.c
+- bsps/arm/tms570/start/init_esm.c
+- bsps/arm/tms570/start/init_system.c
+- bsps/arm/tms570/start/tms570_selftest.c
+- bsps/arm/tms570/start/tms570_selftest_par_can.c
+- bsps/arm/tms570/start/tms570_selftest_par_mibspi.c
+- bsps/arm/tms570/start/tms570_selftest_par_std.c
+- bsps/arm/tms570/start/tms570_selftest_parity.c
+- bsps/arm/tms570/start/tms570_sys_core.S
+- bsps/arm/tms570/start/tms570_tcram_tests.c
+type: build

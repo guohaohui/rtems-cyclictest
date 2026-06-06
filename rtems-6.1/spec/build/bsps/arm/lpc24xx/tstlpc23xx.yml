@@ -1,0 +1,69 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+actions:
+- set-test-state:
+    reason: null
+    state: exclude
+    tests:
+    - block08
+    - capture
+    - cdtest
+    - complex
+    - crypt01
+    - fileio
+    - fsdosfsformat01
+    - fsdosfsname02
+    - fsdosfssync01
+    - fsdosfswrite01
+    - fsrfsbitmap01
+    - fsrofs01
+    - iostream
+    - math
+    - mathf
+    - mdosfsfserror
+    - mdosfsfspatheval
+    - mdosfsfsrdwr
+    - mdosfsfsscandir01
+    - mdosfsfsstatvfs
+    - mdosfsfstime
+    - monitor
+    - monitor02
+    - paranoia
+    - psxaio01
+    - psxaio02
+    - psxaio03
+    - psxfile01
+    - psxmsgq01
+    - psxsignal07
+    - psxtimer01
+    - rcxx01
+    - record01
+    - rtems
+    - shell01
+    - sp16
+    - sp25
+    - sp42
+    - sp48
+    - spcxx01
+    - sptimecounter02
+    - sptimecounter03
+    - sptls02
+    - syscall01
+    - tar01
+    - termios
+    - tmcontext01
+    - tmfine01
+    - top
+    - ttest01
+    - utf8proc01
+build-type: option
+copyrights:
+- Copyright (C) 2020 embedded brains GmbH & Co. KG
+default: []
+description: ''
+enabled-by: true
+links:
+- role: build-dependency
+  uid: ../../tstnorfs
+- role: build-dependency
+  uid: ../../tstsmallmem
+type: build

@@ -1,0 +1,58 @@
+/* SPDX-License-Identifier: BSD-2-Clause */
+
+/**
+ * @file
+ *
+ * @ingroup libcsupport
+ *
+ * @brief This header file provides interfaces used by the memory allocator
+ *   implementation.
+ */
+
+/*
+ *  COPYRIGHT (c) 1989-2007.
+ *  On-Line Applications Research Corporation (OAR).
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ */
+
+#include <rtems.h>
+#include <rtems/score/protectedheap.h>
+#include <rtems/malloc.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
+typedef enum {
+  MALLOC_SYSTEM_STATE_NORMAL,
+  MALLOC_SYSTEM_STATE_NO_PROTECTION,
+  MALLOC_SYSTEM_STATE_NO_ALLOCATION
+} Malloc_System_state;
+
+Malloc_System_state _Malloc_System_state( void );
+
+void _Malloc_Process_deferred_frees( void );
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */

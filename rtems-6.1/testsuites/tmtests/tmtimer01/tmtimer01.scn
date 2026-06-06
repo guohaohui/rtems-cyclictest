@@ -1,0 +1,252 @@
+
+ SIS - SPARC/RISCV instruction simulator 2.30,  copyright Jiri Gaisler 2020
+ Bug-reports to jiri@gaisler.se
+
+ GR740/LEON4 emulation enabled, 4 cpus online, delta 50 clocks
+
+ Loaded build/sparc/gr740/testsuites/tmtests/tmtimer01.exe, entry 0x00000000
+
+
+*** BEGIN OF TEST TMTIMER 1 ***
+*** TEST VERSION: 6.0.0.76c91ee7793fc70b92e2f87e601c3fdc2d2b7f3f
+*** TEST STATE: EXPECTED_PASS
+*** TEST BUILD: RTEMS_SMP
+*** TEST TOOLS: 13.2.0 20230727 (RTEMS 6, RSB d3d738c35a71ca05f675b188539225099401ac79, Newlib a021448)
+*** BEGIN OF JSON DATA ***
+{
+  "timer-count": 61024,
+  "samples": [
+    {
+      "active-timers": 0,
+      "first": 8560,
+      "middle": 8600,
+      "last": 8520
+    }, {
+      "active-timers": 2,
+      "first": 9020,
+      "middle": 11680,
+      "last": 8860
+    }, {
+      "active-timers": 4,
+      "first": 9480,
+      "middle": 9440,
+      "last": 11060
+    }, {
+      "active-timers": 7,
+      "first": 9360,
+      "middle": 9820,
+      "last": 12300
+    }, {
+      "active-timers": 10,
+      "first": 9860,
+      "middle": 9580,
+      "last": 11980
+    }, {
+      "active-timers": 14,
+      "first": 9860,
+      "middle": 10040,
+      "last": 12280
+    }, {
+      "active-timers": 19,
+      "first": 10360,
+      "middle": 10080,
+      "last": 13260
+    }, {
+      "active-timers": 25,
+      "first": 10360,
+      "middle": 10500,
+      "last": 14460
+    }, {
+      "active-timers": 32,
+      "first": 10240,
+      "middle": 10620,
+      "last": 13040
+    }, {
+      "active-timers": 41,
+      "first": 10820,
+      "middle": 10540,
+      "last": 15000
+    }, {
+      "active-timers": 52,
+      "first": 10740,
+      "middle": 10880,
+      "last": 13660
+    }, {
+      "active-timers": 66,
+      "first": 10820,
+      "middle": 10880,
+      "last": 13960
+    }, {
+      "active-timers": 83,
+      "first": 11160,
+      "middle": 11040,
+      "last": 14940
+    }, {
+      "active-timers": 104,
+      "first": 11160,
+      "middle": 11420,
+      "last": 14340
+    }, {
+      "active-timers": 130,
+      "first": 11160,
+      "middle": 11300,
+      "last": 14720
+    }, {
+      "active-timers": 162,
+      "first": 11460,
+      "middle": 11380,
+      "last": 14880
+    }, {
+      "active-timers": 201,
+      "first": 11500,
+      "middle": 11880,
+      "last": 17060
+    }, {
+      "active-timers": 249,
+      "first": 11580,
+      "middle": 11800,
+      "last": 16900
+    }, {
+      "active-timers": 308,
+      "first": 11380,
+      "middle": 12060,
+      "last": 15640
+    }, {
+      "active-timers": 381,
+      "first": 11760,
+      "middle": 11840,
+      "last": 19800
+    }, {
+      "active-timers": 470,
+      "first": 11880,
+      "middle": 12180,
+      "last": 16100
+    }, {
+      "active-timers": 580,
+      "first": 11760,
+      "middle": 12600,
+      "last": 16560
+    }, {
+      "active-timers": 715,
+      "first": 12140,
+      "middle": 12220,
+      "last": 17380
+    }, {
+      "active-timers": 881,
+      "first": 12260,
+      "middle": 12640,
+      "last": 18740
+    }, {
+      "active-timers": 1085,
+      "first": 12140,
+      "middle": 12560,
+      "last": 22320
+    }, {
+      "active-timers": 1336,
+      "first": 12720,
+      "middle": 12600,
+      "last": 17240
+    }, {
+      "active-timers": 1645,
+      "first": 12560,
+      "middle": 13020,
+      "last": 21140
+    }, {
+      "active-timers": 2025,
+      "first": 12720,
+      "middle": 12980,
+      "last": 19500
+    }, {
+      "active-timers": 2492,
+      "first": 12720,
+      "middle": 13400,
+      "last": 18160
+    }, {
+      "active-timers": 3067,
+      "first": 13060,
+      "middle": 13060,
+      "last": 19220
+    }, {
+      "active-timers": 3774,
+      "first": 12980,
+      "middle": 13560,
+      "last": 18620
+    }, {
+      "active-timers": 4644,
+      "first": 13260,
+      "middle": 13860,
+      "last": 18920
+    }, {
+      "active-timers": 5714,
+      "first": 13440,
+      "middle": 13520,
+      "last": 18920
+    }, {
+      "active-timers": 7030,
+      "first": 13440,
+      "middle": 13900,
+      "last": 19380
+    }, {
+      "active-timers": 8649,
+      "first": 13440,
+      "middle": 13820,
+      "last": 21640
+    }, {
+      "active-timers": 10640,
+      "first": 14020,
+      "middle": 13940,
+      "last": 19760
+    }, {
+      "active-timers": 13089,
+      "first": 13940,
+      "middle": 14160,
+      "last": 22100
+    }, {
+      "active-timers": 16101,
+      "first": 13900,
+      "middle": 14320,
+      "last": 22680
+    }, {
+      "active-timers": 19806,
+      "first": 13900,
+      "middle": 14700,
+      "last": 20840
+    }, {
+      "active-timers": 24363,
+      "first": 14360,
+      "middle": 14320,
+      "last": 21660
+    }, {
+      "active-timers": 29968,
+      "first": 14360,
+      "middle": 14540,
+      "last": 21300
+    }, {
+      "active-timers": 36862,
+      "first": 14360,
+      "middle": 15320,
+      "last": 21440
+    }, {
+      "active-timers": 45342,
+      "first": 14580,
+      "middle": 14700,
+      "last": 21600
+    }, {
+      "active-timers": 55772,
+      "first": 14700,
+      "middle": 15040,
+      "last": 22060
+    }, {
+      "active-timers": 61023,
+      "first": 14780,
+      "middle": 15080,
+      "last": 22960
+    }
+  ]
+}
+*** END OF JSON DATA ***
+
+*** END OF TEST TMTIMER 1 ***
+
+cpu 0 in error mode (tt = 0x80)
+ 522750200  00009b40:  91d02000   ta  0x0

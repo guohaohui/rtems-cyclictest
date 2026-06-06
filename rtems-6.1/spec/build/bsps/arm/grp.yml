@@ -1,0 +1,52 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+build-type: group
+cflags: []
+copyrights:
+- Copyright (C) 2020 embedded brains GmbH & Co. KG
+cppflags: []
+cxxflags: []
+enabled-by: true
+includes: []
+install:
+- destination: ${BSP_INCLUDEDIR}
+  source:
+  - bsps/arm/include/cachel1_armv7.h
+  - bsps/arm/include/cmsis_compiler.h
+  - bsps/arm/include/cmsis_gcc.h
+  - bsps/arm/include/cmsis_version.h
+  - bsps/arm/include/core_cm7.h
+  - bsps/arm/include/core_cm4.h
+  - bsps/arm/include/mpu_armv7.h
+- destination: ${BSP_INCLUDEDIR}/bsp
+  source:
+  - bsps/arm/include/bsp/arm-a9mpcore-clock.h
+  - bsps/arm/include/bsp/arm-a9mpcore-irq.h
+  - bsps/arm/include/bsp/arm-a9mpcore-regs.h
+  - bsps/arm/include/bsp/arm-a9mpcore-start.h
+  - bsps/arm/include/bsp/arm-cp15-start.h
+  - bsps/arm/include/bsp/arm-errata.h
+  - bsps/arm/include/bsp/arm-pl050-regs.h
+  - bsps/arm/include/bsp/arm-pl050.h
+  - bsps/arm/include/bsp/arm-pl111-fb.h
+  - bsps/arm/include/bsp/arm-pl111-regs.h
+  - bsps/arm/include/bsp/arm-release-id.h
+  - bsps/arm/include/bsp/armv7m-irq.h
+  - bsps/arm/include/bsp/clock-armv7m.h
+  - bsps/arm/include/bsp/linker-symbols-arch.h
+  - bsps/arm/include/bsp/lpc-dma.h
+  - bsps/arm/include/bsp/lpc-emc.h
+  - bsps/arm/include/bsp/lpc-i2s.h
+  - bsps/arm/include/bsp/lpc-lcd.h
+  - bsps/arm/include/bsp/lpc-timer.h
+  - bsps/arm/include/bsp/start.h
+  - bsps/include/bsp/linker-symbols.h
+- destination: ${BSP_LIBDIR}
+  source:
+  - bsps/arm/shared/start/linkcmds.armv4
+  - bsps/arm/shared/start/linkcmds.armv7m
+  - bsps/arm/shared/start/linkcmds.base
+ldflags: []
+links: []
+type: build
+use-after: []
+use-before: []

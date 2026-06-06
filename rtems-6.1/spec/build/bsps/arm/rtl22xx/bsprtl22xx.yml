@@ -1,0 +1,21 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+arch: arm
+bsp: rtl22xx
+build-type: bsp
+cflags: []
+copyrights:
+- Copyright (C) 2020 embedded brains GmbH & Co. KG
+cppflags: []
+enabled-by: true
+family: rtl22xx
+includes: []
+install: []
+links:
+- role: build-dependency
+  uid: tstrtl22xx
+- role: build-dependency
+  uid: ../../opto2
+- role: build-dependency
+  uid: grp
+source: []
+type: build

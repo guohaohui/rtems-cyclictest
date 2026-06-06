@@ -1,0 +1,76 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+actions:
+- set-test-state:
+    reason: null
+    state: user-input
+    tests:
+    - capture
+    - dl10
+    - fileio
+    - monitor
+    - termios
+    - top
+- set-test-state:
+    reason: null
+    state: benchmark
+    tests:
+    - dhrystone
+    - linpack
+    - whetstone
+- set-test-state:
+    reason: null
+    state: expected-fail
+    tests:
+    - psxfenv01
+- set-test-state:
+    reason: |
+        Fails because of #2169, rename to existing entries is
+        not supported
+    state: expected-fail
+    tests:
+    - imfsfsrenameexisting
+    - imfsfsrenamepermexisting
+    - jffs2fsrenameexisting
+    - jffs2fsrenamepermexisting
+    - jffs2nandfsrenameexisting
+    - jffs2nandfsrenamepermexisting
+    - mdosfsfsrenameexisting
+    - mimfsfsrenameexisting
+    - mimfsfsrenamepermexisting
+    - mrfsfsrenameexisting
+    - mrfsfsrenamepermexisting
+- set-test-state:
+    reason: |
+        Fails because of #2169 and other rename issue
+    state: expected-fail
+    tests:
+    - imfsfssymlink
+    - jffs2fssymlink
+    - jffs2nandfssymlink
+    - mimfsfssymlink
+    - mrfsfssymlink
+- set-test-state:
+    reason: |
+        Fails because of #5069, NAME_MAX is ignored by RFS
+    state: expected-fail
+    tests:
+    - mrfsfsrenamelongname
+- set-test-state:
+    reason: |
+        Fails because of #5070, this test seems invalid
+    state: expected-fail
+    tests:
+    - jffs2fsrenamemaxlinks
+    - jffs2nandfsrenamemaxlinks
+    - mdosfsfsrenamemaxlinks
+    - mimfsfsrenamemaxlinks
+    - mrfsfsrenamemaxlinks
+build-type: option
+copyrights:
+- Copyright (C) 2020 embedded brains GmbH & Co. KG
+default: []
+description: |
+  Provides general test states.
+enabled-by: true
+links: []
+type: build

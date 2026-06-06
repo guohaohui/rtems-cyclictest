@@ -1,0 +1,23 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+build-type: group
+cflags: []
+copyrights:
+- Copyright (C) 2021 On-Line Applications Research (OAR)
+cppflags: []
+cxxflags: []
+enabled-by: true
+includes: []
+install: []
+ldflags: []
+links:
+- role: build-dependency
+  uid: ../../objnandpsu
+- role: build-dependency
+  uid: objnandjffs2
+- role: build-dependency
+  uid: grp
+- role: build-dependency
+  uid: objcadencei2c
+type: build
+use-after: []
+use-before: []

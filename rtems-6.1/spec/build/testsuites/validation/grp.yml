@@ -1,0 +1,97 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+build-type: group
+cflags: []
+copyrights:
+- Copyright (C) 2020 embedded brains GmbH & Co. KG
+cppflags: []
+cxxflags: []
+enabled-by: BUILD_VALIDATIONTESTS
+includes:
+- ${BSP_INCLUDES}
+- testsuites/validation
+install: []
+ldflags: []
+links:
+- role: build-dependency
+  uid: libvalidation
+- role: build-dependency
+  uid: fatal-boot-processor-not-assigned-to-scheduler
+- role: build-dependency
+  uid: fatal-idle-thread-create-failed
+- role: build-dependency
+  uid: fatal-idle-thread-stack-too-small
+- role: build-dependency
+  uid: fatal-init-task-construct-failed
+- role: build-dependency
+  uid: fatal-mandatory-processor-not-present
+- role: build-dependency
+  uid: fatal-scheduler-requires-exactly-one-processor
+- role: build-dependency
+  uid: fatal-smp
+- role: build-dependency
+  uid: fatal-start-of-mandatory-processor-failed
+- role: build-dependency
+  uid: fatal-start-on-not-online-processor
+- role: build-dependency
+  uid: fatal-too-large-tls-size
+- role: build-dependency
+  uid: performance-no-clock-0
+- role: build-dependency
+  uid: terminate
+- role: build-dependency
+  uid: userext
+- role: build-dependency
+  uid: validation-0
+- role: build-dependency
+  uid: validation-1
+- role: build-dependency
+  uid: validation-acfg-0
+- role: build-dependency
+  uid: validation-acfg-1
+- role: build-dependency
+  uid: validation-cache
+- role: build-dependency
+  uid: validation-intr
+- role: build-dependency
+  uid: validation-io-kernel
+- role: build-dependency
+  uid: validation-no-clock-0
+- role: build-dependency
+  uid: validation-non-smp
+- role: build-dependency
+  uid: validation-one-cpu-0
+- role: build-dependency
+  uid: validation-one-cpu-1
+- role: build-dependency
+  uid: validation-smp-one-cpu-0
+- role: build-dependency
+  uid: validation-smp-only-0
+- role: build-dependency
+  uid: validation-smp-only-2
+- role: build-dependency
+  uid: validation-timecounter-0
+- role: build-dependency
+  uid: validation-timecounter-1
+- role: build-dependency
+  uid: validation-timecounter-smp-0
+- role: build-dependency
+  uid: validation-tls-0
+- role: build-dependency
+  uid: validation-tls-1
+- role: build-dependency
+  uid: bsps/fatal-clock-xil-ttc-irq-install
+- role: build-dependency
+  uid: bsps/fatal-extension
+- role: build-dependency
+  uid: bsps/fatal-sparc-leon3-cache-snooping-disabled-boot
+- role: build-dependency
+  uid: bsps/fatal-sparc-leon3-cache-snooping-disabled-secondary
+- role: build-dependency
+  uid: bsps/fatal-sparc-leon3-clock-initialization
+- role: build-dependency
+  uid: bsps/validation-bsp-0
+type: build
+use-after:
+- validation
+- rtemstest
+use-before: []

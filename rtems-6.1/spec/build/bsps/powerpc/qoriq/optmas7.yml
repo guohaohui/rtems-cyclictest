@@ -1,0 +1,21 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+actions:
+- get-integer: null
+- define: null
+build-type: option
+copyrights:
+- Copyright (C) 2020 embedded brains GmbH & Co. KG
+default:
+- enabled-by:
+  - powerpc/qoriq_e6500_32
+  - powerpc/qoriq_e6500_64
+  value: 0x0000000f
+- enabled-by: true
+  value: 0x00000000
+description: |
+  MAS7 value for device TLB1 entries
+enabled-by: true
+format: '{:#010x}'
+links: []
+name: QORIQ_MMU_DEVICE_MAS7
+type: build

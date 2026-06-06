@@ -1,0 +1,47 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+arch: x86_64
+bsp: amd64efi
+build-type: bsp
+cflags: []
+copyrights:
+- Copyright (C) 2020 embedded brains GmbH & Co. KG
+cppflags: []
+enabled-by: true
+family: amd64
+includes:
+- bsps/shared/freebsd/stand/efi/include
+- bsps/shared/freebsd/stand/efi/include/amd64
+install: []
+links:
+- role: build-dependency
+  uid: ../../opto2
+- role: build-dependency
+  uid: ../../optmultiboot
+- role: build-dependency
+  uid: ../../opteficonsole
+- role: build-dependency
+  uid: ../../optefiearlyconsole
+- role: build-dependency
+  uid: ../../optefistom
+- role: build-dependency
+  uid: ../../optefigopm
+- role: build-dependency
+  uid: ../../optefimmapprint
+- role: build-dependency
+  uid: ../../optefibs
+- role: build-dependency
+  uid: ../../objefi
+- role: build-dependency
+  uid: grp
+- role: build-dependency
+  uid: optldpagesize
+source:
+- bsps/x86_64/amd64/clock/eficlock.c
+- bsps/x86_64/amd64/console/eficonsole.c
+- bsps/x86_64/amd64/console/efistop.c
+- bsps/x86_64/amd64/console/efigop.c
+- bsps/x86_64/amd64/console/outch.c
+- bsps/x86_64/amd64/console/console.c
+- bsps/x86_64/amd64/start/multiboot2.c
+- bsps/x86_64/amd64/start/efimem.c
+type: build

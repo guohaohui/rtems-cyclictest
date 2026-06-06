@@ -1,0 +1,57 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+actions:
+- get-boolean: null
+- env-enable: null
+- define-condition: null
+build-type: option
+copyrights:
+- Copyright (C) 2023 B. Moessner
+- Copyright (C) 2020 embedded brains GmbH & Co. KG
+default:
+- enabled-by: true
+  value: false
+description: |
+  Enable the Symmetric Multiprocessing (SMP) support
+enabled-by:
+- arm/altcycv_devkit
+- arm/fvp_cortex_r52
+- arm/imx7
+- arm/raspberrypi2
+- arm/realview_pbx_a9_qemu
+- arm/xilinx_zynqmp_ultra96
+- bsps/aarch64/xilinx-zynqmp
+- bsps/arm/xilinx-zynq
+- bsps/powerpc/qoriq
+- i386/pc386
+- i386/pc486
+- i386/pc586
+- i386/pc686
+- riscv/beaglevfire
+- riscv/griscv
+- riscv/grv32imac
+- riscv/grv32imafdc
+- riscv/mpfs64imafdc
+- riscv/noel32imafd
+- riscv/noel64imac
+- riscv/noel64imafdc
+- riscv/noel64imafd
+- riscv/rv32iac
+- riscv/rv32imac
+- riscv/rv32imafc
+- riscv/rv32imafd
+- riscv/rv32imafdc
+- riscv/rv64imac
+- riscv/rv64imac_medany
+- riscv/rv64imafd
+- riscv/rv64imafdc
+- riscv/rv64imafdc_medany
+- riscv/rv64imafd_medany
+- riscv/kendrytek210
+- sparc/erc32
+- sparc/gr712rc
+- sparc/gr740
+- sparc/leon3
+- x86_64/amd64
+links: []
+name: RTEMS_SMP
+type: build

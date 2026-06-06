@@ -1,0 +1,21 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+build-type: test-program
+cflags: []
+copyrights:
+- Copyright (C) 2021 embedded brains GmbH & Co. KG
+cppflags: []
+cxxflags: []
+enabled-by: RTEMS_SMP
+features: c cprogram
+includes: []
+ldflags:
+- -Wl,-wrap=_CPU_SMP_Start_processor
+links: []
+source:
+- testsuites/validation/tc-start-of-optional-processor-failed.c
+- testsuites/validation/ts-validation-smp-only-2.c
+stlib: []
+target: testsuites/validation/ts-validation-smp-only-2.exe
+type: build
+use-after: []
+use-before: []

@@ -1,0 +1,21 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+actions:
+- get-integer: null
+- define: null
+build-type: option
+copyrights:
+- Copyright (C) 2020 embedded brains GmbH & Co. KG
+default:
+- enabled-by: powerpc/gwlcfm
+  value: 66
+- enabled-by: powerpc/mpc5643l_evb
+  value: null
+- enabled-by: true
+  value: 0
+description: |
+  Must be defined to set the EMIOS prescaler
+enabled-by: true
+format: '{}'
+links: []
+name: MPC55XX_EMIOS_PRESCALER
+type: build

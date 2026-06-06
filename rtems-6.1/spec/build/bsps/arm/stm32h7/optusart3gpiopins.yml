@@ -1,0 +1,19 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+actions:
+- get-string: null
+- define-unquoted: null
+build-type: option
+copyrights:
+- Copyright (C) 2021 embedded brains GmbH & Co. KG
+default:
+- enabled-by: arm/stm32h750b-dk
+  value: ( GPIO_PIN_10 | GPIO_PIN_11 )
+- enabled-by: true
+  value: ( GPIO_PIN_8 | GPIO_PIN_9 )
+description: |
+  GPIO pins used for the USART3 pin configuration.
+enabled-by: true
+format: '{}'
+links: []
+name: STM32H7_USART3_GPIO_PINS
+type: build

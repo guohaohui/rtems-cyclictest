@@ -1,0 +1,16 @@
+This file describes the directives and concepts tested by this test set.
+
+test set name: sptls03
+
+The test expects that no thread-local object is present.
+
+directives:
+
+  - _Thread_Initialize()
+
+concepts:
+
+  - Ensure that the thread-local storage (TLS) is not allocated if TLS is not
+    used.
+  - Ensure that the small-data variables are accessible.  On some architectures
+    like PowerPC the TLS ABI conflicts with other variants.

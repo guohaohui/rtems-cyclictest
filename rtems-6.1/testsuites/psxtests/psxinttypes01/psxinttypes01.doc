@@ -1,0 +1,47 @@
+﻿This File describes the concepts tested by this test suite.
+
+inttypes.h - fixed size integer types
+
+test suite name: PSXINTTYPE 01
+
+- Checks for invalid base value
+
+- Checks for Strtoimax Testcases
+	- checks for output for string having a positive number
+	- checks for output for string having a negative number
+	- checks for output for string having a positive number - Number Out of Range
+	- checks for output for string having a negative number - Number Out of Range
+	- checks for final string pointed by endptr
+	- checks for output for invalid argument - Invalid Base
+
+- Checks for Strtoumax Test Cases
+	- checks for output for string having a positive number
+	- checks for output for string having a negative number
+	- checks for output for string having a positive number - Number Out of Range
+	- checks for output for string having a negative number - Number Out of Range
+	- checks for final string pointed by endptr
+	- checks for output for invalid argument - Invalid Base
+
+- Checks for Wcstoimax Testcases
+	- checks for output for string having a positive number
+	- checks for output for string having a negative number
+	- checks for output for string having a positive number - Number Out of Range
+	- checks for output for string having a negative number - Number Out of Range
+	- checks for final string pointed by endptr
+	- checks for output for invalid argument - Invalid Base
+
+- Checks for Wcstoumax Testcases
+	- checks for output for string having a positive number
+	- checks for output for string having a negative number
+	- checks for output for string having a positive number - Number Out of Range
+	- checks for output for string having a negative number - Number Out of Range
+	- checks for final string pointed by endptr
+	- checks for output for invalid argument - Invalid Base
+
+- Checks for imaxabs Testcases
+	- checks for output with an input with any negative number
+	- checks for output with an input with any positive number
+
+- Checks for imaxdiv Testcases
+	- checks for the output quotient and remainder with input with positive numbers
+

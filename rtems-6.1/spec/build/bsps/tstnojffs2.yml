@@ -1,0 +1,44 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+actions:
+- set-test-state:
+    reason: null
+    state: exclude
+    tests:
+    - fsjffs2empty01
+    - fsjffs2gc01
+    - jffs2fserror
+    - jffs2fslink
+    - jffs2fspatheval
+    - jffs2fspermission
+    - jffs2fsrdwr
+    - jffs2fsrename
+    - jffs2fsrenameexisting
+    - jffs2fsrenamelongname
+    - jffs2fsrenamemaxlinks
+    - jffs2fsrenamepermexisting
+    - jffs2fsrmdirparent
+    - jffs2fsscandir01
+    - jffs2fssymlink
+    - jffs2fstime
+    - jffs2nandfserror
+    - jffs2nandfslink
+    - jffs2nandfspatheval
+    - jffs2nandfspermission
+    - jffs2nandfsrdwr
+    - jffs2nandfsrename
+    - jffs2nandfsrenameexisting
+    - jffs2nandfsrenamelongname
+    - jffs2nandfsrenamemaxlinks
+    - jffs2nandfsrenamepermexisting
+    - jffs2nandfsrmdirparent
+    - jffs2nandfsscandir01
+    - jffs2nandfssymlink
+    - jffs2nandfstime
+build-type: option
+copyrights:
+- Copyright (C) 2020 embedded brains GmbH & Co. KG
+default: []
+description: ''
+enabled-by: true
+links: []
+type: build

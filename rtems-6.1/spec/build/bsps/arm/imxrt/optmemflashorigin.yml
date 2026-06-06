@@ -1,0 +1,22 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+actions:
+- get-integer: null
+- env-assign: null
+- define-unquoted: IMXRT_MEMORY_FLASH_ORIGIN
+build-type: option
+copyrights:
+- Copyright (C) 2020 embedded brains GmbH & Co. KG
+default:
+- enabled-by: arm/imxrt1166-cm7-saltshaker
+  value: 0x30000000
+- enabled-by: true
+  value: 0x60000000
+description: |
+  Origin of the external flash memory.  That can be for example a flash
+  connected to FlexSPI or to SEMC.  The default value is for a HyperFlash
+  connected to FlexSPI or a board specific variant for special BSPs.
+enabled-by: true
+format: '{:#010x}'
+links: []
+name: IMXRT_MEMORY_FLASH_ORIGIN
+type: build

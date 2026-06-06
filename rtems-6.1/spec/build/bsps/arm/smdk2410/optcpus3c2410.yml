@@ -1,0 +1,18 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+actions:
+- get-boolean: null
+- define-condition: null
+build-type: option
+copyrights:
+- Copyright (C) 2020 embedded brains GmbH & Co. KG
+default:
+- enabled-by: arm/smdk2410
+  value: true
+- enabled-by: true
+  value: false
+description: |
+  If defined, enable optons for the S3C2410 CPU model.
+enabled-by: true
+links: []
+name: CPU_S3C2410
+type: build

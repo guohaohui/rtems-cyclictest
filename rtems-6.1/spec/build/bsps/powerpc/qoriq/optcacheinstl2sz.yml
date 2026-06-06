@@ -1,0 +1,21 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+actions:
+- get-integer: null
+- define: null
+build-type: option
+copyrights:
+- Copyright (C) 2020 embedded brains GmbH & Co. KG
+default:
+- enabled-by:
+  - powerpc/qoriq_e6500_32
+  - powerpc/qoriq_e6500_64
+  value: 2097152
+- enabled-by: true
+  value: 262144
+description: |
+  the L2 instruction cache size
+enabled-by: true
+format: '{}'
+links: []
+name: PPC_CACHE_INSTRUCTION_L2_SIZE
+type: build

@@ -1,0 +1,25 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+actions:
+- get-integer: null
+- define: null
+build-type: option
+copyrights:
+- Copyright (C) 2020 embedded brains GmbH & Co. KG
+default:
+- enabled-by:
+  - arm/lm3s6965
+  - arm/lm3s6965_qemu
+  value: 0x0000000e
+- enabled-by: arm/lm3s3749
+  value: 0x00000010
+- enabled-by: arm/lm4f120
+  value: 0x00000015
+- enabled-by: true
+  value: 0x00000000
+description: |
+  crystal configuration for RCC register
+enabled-by: true
+format: '{:#010x}'
+links: []
+name: LM3S69XX_XTAL_CONFIG
+type: build

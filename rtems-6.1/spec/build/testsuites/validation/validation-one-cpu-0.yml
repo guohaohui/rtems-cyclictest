@@ -1,0 +1,35 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+build-type: test-program
+cflags: []
+copyrights:
+- Copyright (C) 2021 embedded brains GmbH & Co. KG
+cppflags: []
+cxxflags: []
+enabled-by: true
+features: c cprogram
+includes: []
+ldflags:
+- -Wl,--wrap=_Scheduler_priority_Yield
+links: []
+source:
+- testsuites/validation/tc-acfg-one-cpu.c
+- testsuites/validation/tc-ratemon-cancel.c
+- testsuites/validation/tc-ratemon-get-status.c
+- testsuites/validation/tc-ratemon-period.c
+- testsuites/validation/tc-ratemon-timeout.c
+- testsuites/validation/tc-sem-delete.c
+- testsuites/validation/tc-sem-uni.c
+- testsuites/validation/tc-signal-catch.c
+- testsuites/validation/tc-signal-send.c
+- testsuites/validation/tc-score-fatal.c
+- testsuites/validation/tc-task-create-errors.c
+- testsuites/validation/tc-task-mode.c
+- testsuites/validation/tc-task-set-affinity.c
+- testsuites/validation/tc-task-set-priority.c
+- testsuites/validation/tc-task-wake-after.c
+- testsuites/validation/ts-validation-one-cpu-0.c
+stlib: []
+target: testsuites/validation/ts-validation-one-cpu-0.exe
+type: build
+use-after: []
+use-before: []

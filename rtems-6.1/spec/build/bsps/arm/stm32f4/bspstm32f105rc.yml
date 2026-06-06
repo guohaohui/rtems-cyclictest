@@ -1,0 +1,21 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+arch: arm
+bsp: stm32f105rc
+build-type: bsp
+cflags: []
+copyrights:
+- Copyright (C) 2020 embedded brains GmbH & Co. KG
+cppflags: []
+enabled-by: true
+family: stm32f4
+includes: []
+install: []
+links:
+- role: build-dependency
+  uid: tststm32f105rc
+- role: build-dependency
+  uid: ../../opto2
+- role: build-dependency
+  uid: grp
+source: []
+type: build

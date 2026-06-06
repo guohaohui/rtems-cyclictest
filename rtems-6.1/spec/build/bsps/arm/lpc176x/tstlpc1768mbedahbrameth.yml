@@ -1,0 +1,137 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+actions:
+- set-test-state:
+    reason: null
+    state: exclude
+    tests:
+    - block08
+    - calloc
+    - capture
+    - cdtest
+    - clockgettime
+    - close
+    - debugger01
+    - defaultconfig01
+    - dhrystone
+    - dup2
+    - fcntl
+    - fileio
+    - flockfile
+    - fork
+    - free
+    - fsdosfswrite01
+    - fsrfsbitmap01
+    - fstat
+    - ftrylockfile
+    - funlockfile
+    - getlogin
+    - getpwnam
+    - getpwuid
+    - gettimeofday
+    - getuid
+    - heapwalk
+    - htonl
+    - imfsfserror
+    - imfsfslink
+    - imfsfspatheval
+    - imfsfspermission
+    - imfsfsrdwr
+    - imfsfsscandir01
+    - imfsfssymlink
+    - imfsfstime
+    - iostream
+    - kill
+    - longjmp
+    - lseek
+    - lstat
+    - malloc
+    - mdosfsfserror
+    - mdosfsfspatheval
+    - mdosfsfsrdwr
+    - mdosfsfsscandir01
+    - mdosfsfsstatvfs
+    - mdosfsfstime
+    - mimfsfserror
+    - mimfsfslink
+    - mimfsfspatheval
+    - mimfsfspermission
+    - mimfsfsrdwr
+    - mimfsfsrename
+    - mimfsfsscandir01
+    - mimfsfssymlink
+    - mimfsfstime
+    - monitor
+    - monitor01
+    - monitor02
+    - nanosleep
+    - open
+    - pipe
+    - posixmemalign
+    - psxaio01
+    - psxaio02
+    - psxaio03
+    - psxbarrier01
+    - psxkey07
+    - psxkey08
+    - psxsignal02
+    - psxsignal07
+    - rbheap01
+    - read
+    - readv
+    - realloc
+    - rtems
+    - setjmp
+    - sigaddset
+    - sigdelset
+    - sigemptyset
+    - sigfillset
+    - sigismember
+    - sigprocmask
+    - sp01
+    - sp16
+    - sp20
+    - sp25
+    - sp35
+    - sp42
+    - sp48
+    - spclockerr01
+    - speventerr03
+    - spintrerr01
+    - spmsgqerr01
+    - spmsgqerr02
+    - spporterr01
+    - spratemonerr01
+    - spregionerr01
+    - spsemerr01
+    - spsemerr02
+    - spsignalerr01
+    - spstkalloc
+    - sptaskerr01
+    - sptaskerr03
+    - sptimecounter02
+    - sptimecounter03
+    - sptls02
+    - stat
+    - tm21
+    - tmcontext01
+    - tmfine01
+    - top
+    - unlink
+    - utf8proc01
+    - vfork
+    - wait
+    - waitpid
+    - write
+    - writev
+build-type: option
+copyrights:
+- Copyright (C) 2020 embedded brains GmbH & Co. KG
+default: []
+description: ''
+enabled-by: true
+links:
+- role: build-dependency
+  uid: ../../tstnorfs
+- role: build-dependency
+  uid: ../../tstsmallmem
+type: build

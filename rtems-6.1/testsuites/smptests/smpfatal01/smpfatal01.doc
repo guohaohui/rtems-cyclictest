@@ -1,0 +1,13 @@
+This file describes the directives and concepts tested by this test set.
+
+test set name: smpfatal01
+
+directives:
+
+  - _SMP_Request_shutdown()
+  - _SMP_Request_start_multitasking()
+
+concepts:
+
+  - Ensure that the system termination in case of shutdown detection at a
+    secondary processors works during driver initialization.

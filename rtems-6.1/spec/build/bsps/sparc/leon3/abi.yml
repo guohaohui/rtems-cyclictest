@@ -1,0 +1,31 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+actions:
+- get-string: null
+- split: null
+- env-append: null
+build-type: option
+copyrights:
+- Copyright (C) 2020 embedded brains GmbH & Co. KG
+default:
+- enabled-by: sparc/ut700
+  value:
+  - -mcpu=leon3
+  - -mfix-ut700
+- enabled-by: sparc/ut699
+  value:
+  - -mcpu=leon
+  - -mfix-ut699
+- enabled-by: sparc/gr712rc
+  value:
+  - -mcpu=leon3
+  - -mfix-gr712rc
+- enabled-by: true
+  value:
+  - -mcpu=leon3
+description: |
+  ABI flags
+enabled-by:
+- gcc
+links: []
+name: ABI_FLAGS
+type: build

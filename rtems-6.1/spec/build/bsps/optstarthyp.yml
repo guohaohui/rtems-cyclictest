@@ -1,0 +1,17 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+actions:
+- get-boolean: null
+- define-condition: null
+build-type: option
+copyrights:
+- Copyright (C) 2020 embedded brains GmbH & Co. KG
+default:
+- enabled-by: true
+  value: true
+description: |
+  If set to true, then the a system start in hypervisor mode (EL2) is
+  supported, otherwise it is unsupported.
+enabled-by: true
+links: []
+name: BSP_START_IN_HYP_SUPPORT
+type: build

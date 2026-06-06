@@ -1,0 +1,33 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+actions:
+- get-string: null
+- split: null
+- env-append: null
+build-type: option
+copyrights:
+- Copyright (C) 2020 Hesham Almatary <Hesham.Almatary@cl.cam.ac.uk>
+default:
+- enabled-by: sparc/ut700
+  value:
+  - -mcpu=leon3
+  - -mfix-ut700
+- enabled-by: sparc/ut699
+  value:
+  - -mcpu=leon
+  - -mfix-ut699
+- enabled-by: sparc/gr712rc
+  value:
+  - -mcpu=gr712rc
+- enabled-by: sparc/gr740
+  value:
+  - -mcpu=gr740
+- enabled-by: true
+  value:
+  - -mcpu=leon3
+description: |
+  ABI flags
+enabled-by:
+- clang
+links: []
+name: ABI_FLAGS
+type: build

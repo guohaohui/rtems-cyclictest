@@ -1,0 +1,22 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+actions:
+- get-boolean: null
+- define-condition: null
+build-type: option
+copyrights:
+- Copyright (C) 2020 embedded brains GmbH & Co. KG
+default:
+- enabled-by:
+  - riscv/beaglevfire
+  - riscv/mpfs64imafdc
+  - riscv/kendrytek210
+  value: true
+- enabled-by: true
+  value: false
+description: |
+  the path to the header file containing the device tree binary. See the BSP
+  documentation for more information.
+enabled-by: true
+links: []
+name: BSP_DTB_IS_SUPPORTED
+type: build

@@ -1,0 +1,25 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+build-type: objects
+cflags: []
+copyrights:
+- Copyright (C) 2020 On-Line Applications Research (OAR)
+cppflags: []
+cxxflags: []
+enabled-by: true
+includes: []
+install:
+- destination: ${BSP_INCLUDEDIR}/dev/serial
+  source:
+  - bsps/include/dev/serial/zynq-uart-regs.h
+  - bsps/include/dev/serial/zynq-uart.h
+  - bsps/include/dev/serial/zynq-uart-zynq.h
+  - bsps/include/dev/serial/zynq-uart-zynqmp.h
+links:
+- role: build-dependency
+  uid: optzynquartkernbase
+source:
+- bsps/shared/dev/serial/zynq-uart-input-clock.c
+- bsps/shared/dev/serial/zynq-uart-kernel-io.c
+- bsps/shared/dev/serial/zynq-uart-polled.c
+- bsps/shared/dev/serial/zynq-uart.c
+type: build

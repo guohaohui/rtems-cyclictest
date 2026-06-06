@@ -1,0 +1,40 @@
+
+ SIS - SPARC/RISCV instruction simulator 2.30,  copyright Jiri Gaisler 2020
+ Bug-reports to jiri@gaisler.se
+
+ GR740/LEON4 emulation enabled, 4 cpus online, delta 50 clocks
+
+ Loaded build/sparc/gr740/testsuites/sptests/sptimecounter02.exe, entry 0x00000000
+
+
+*** BEGIN OF TEST SPTIMECOUNTER 2 ***
+*** TEST VERSION: 6.0.0.105c3e541c26113503080c65006ad775d31fca3d
+*** TEST STATE: EXPECTED_PASS
+*** TEST BUILD: RTEMS_SMP
+*** TEST TOOLS: 13.2.0 20230727 (RTEMS 6, RSB d3d738c35a71ca05f675b188539225099401ac79, Newlib a021448)
+*** BEGIN OF JSON DATA ***
+[
+  {
+    "timecounter": "Clock Driver",
+    "counter": [
+      [523086],
+      [523088, 528231],
+      [523088, 528232, 528231],
+      [523088, 528215, 528215, 527992]
+    ]
+  }, {
+    "timecounter": "Null",
+    "counter": [
+      [528630],
+      [528662, 533818],
+      [528684, 533839, 533840],
+      [528664, 533821, 533821, 533582]
+    ]
+  }
+]
+*** END OF JSON DATA ***
+
+*** END OF TEST SPTIMECOUNTER 2 ***
+
+cpu 0 in error mode (tt = 0x80)
+ 400337050  00009120:  91d02000   ta  0x0

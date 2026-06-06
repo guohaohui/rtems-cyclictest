@@ -1,0 +1,65 @@
+# SPDX-License-Identifier: BSD-2-Clause
+
+#  COPYRIGHT (c) 1989-2013.
+#  On-Line Applications Research Corporation (OAR).
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions
+# are met:
+# 1. Redistributions of source code must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+# 2. Redistributions in binary form must reproduce the above copyright
+#    notice, this list of conditions and the following disclaimer in the
+#    documentation and/or other materials provided with the distribution.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+# ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+# LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+# CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+# SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+# INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+# CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+# ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+# POSSIBILITY OF SUCH DAMAGE.
+
+This file describes the directives and concepts tested by this test set.
+
+test set name:  spedfsched01
+
+directives:
+  + rtems_task_create
+  + rtems_task_start
+  + rtems_task_delete
+  + rtems_task_indent
+  + rtems_task_get_tod
+  + rtems_task_wake_after
+
+concepts:
+
+This test is identical to sp01 but for EDF-based scheduling:
+
+  a.  Verifies system can create and start both the executive's system
+      initialization and idle task.
+
+  b.  Verifies executive can swap between three application tasks at the
+      same priority and the executive's internal idle task.
+
+  c.  Verifies can print strings to the CRT on port 2 of the mvme136 board
+      using Print and Println in the board support package.
+
+  d.  Verifies interrupt handler can handle a task switch from an interrupt.
+
+  e.  Verifies executive initialization performed correctly.
+
+  f.  Verifies the executive trap handler except for the halt function.
+
+  g.  Verifies that a task can get the task identification number of itself.
+
+  h.  Verifies implementation of SuperCore TOD_MILLISECONDS_TO_TICKS.  Normal
+      computation in applications is via a macro at the Classic API level.
+
+output:
+ "TA1" is printed once every 5 seconds.  "TA2" is printed once
+ every 10 seconds.  "TA3" is printed once every 15 seconds.

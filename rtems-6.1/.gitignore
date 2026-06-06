@@ -1,0 +1,6 @@
+/build
+doc
+/*.ini
+.lock*
+*.pyc
+.waf*

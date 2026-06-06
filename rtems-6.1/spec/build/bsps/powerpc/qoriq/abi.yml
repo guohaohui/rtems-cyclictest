@@ -1,0 +1,33 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+actions:
+- get-string: null
+- split: null
+- env-append: null
+build-type: option
+copyrights:
+- Copyright (C) 2020 embedded brains GmbH & Co. KG
+default:
+- enabled-by: powerpc/qoriq_e6500_64
+  value:
+  - -mcpu=e6500
+  - -m64
+  - -mvrsave
+- enabled-by: powerpc/qoriq_e6500_32
+  value:
+  - -mcpu=e6500
+  - -m32
+  - -mvrsave
+  - -msdata=sysv
+- enabled-by: true
+  value:
+  - -mcpu=8540
+  - -msoft-float
+  - -meabi
+  - -msdata=sysv
+  - -mstrict-align
+description: |
+  ABI flags
+enabled-by: true
+links: []
+name: ABI_FLAGS
+type: build

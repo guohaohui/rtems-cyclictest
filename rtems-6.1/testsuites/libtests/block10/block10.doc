@@ -1,0 +1,58 @@
+# SPDX-License-Identifier: BSD-2-Clause
+
+# Copyright (c) 2010 embedded brains GmbH & Co. KG
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions
+# are met:
+# 1. Redistributions of source code must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+# 2. Redistributions in binary form must reproduce the above copyright
+#    notice, this list of conditions and the following disclaimer in the
+#    documentation and/or other materials provided with the distribution.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+# ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+# LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+# CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+# SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+# INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+# CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+# ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+# POSSIBILITY OF SUCH DAMAGE.
+#
+
+This file describes the directives and concepts tested by this test set.
+
+test set name: block10
+
+directives:
+
+  rtems_bdbuf_get
+  rtems_bdbuf_read
+  rtems_bdbuf_release
+  rtems_bdbuf_release_modified
+  rtems_bdbuf_sync
+
+concepts:
+
++ Purge functions test in various states
+
+State changes count during this test:
+
+         |         PREVIOUS STATE
+         | FR EM CA AC AM AE AP MO SY TF TP
+---------+---------------------------------
+      FR |  0 28  0  0  0  0  0  0  0  0  0
+      EM | 28  0  4  0  0 14 18  2  2  0  2
+      CA |  0  0  0  2  0  0  0  0  0 18  0
+      AC |  0  0 16  0  0  0  0  0  0  0  0
+NEW   AM |  0  0  0  0  0  0  0  6  0  0  0
+STATE AE |  0 26  0  0  0  0  0  0  0  0  0
+      AP |  0  0  0  6  6  6  0  0  0  0  0
+      MO |  0  0  0  2  0  6  0  0  0  0  0
+      SY |  0  0  0  6  0  0  0  0  0  0  0
+      TF |  0 16  0  0  0  0  0  0  4  0  0
+      TP |  0  0  0  0  0  0  0  0  0  2  0

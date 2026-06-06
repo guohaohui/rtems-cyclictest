@@ -1,0 +1,16 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+actions:
+- get-boolean: null
+- define-condition: null
+build-type: option
+copyrights:
+- Copyright (C) 2020 embedded brains GmbH & Co. KG
+default:
+- enabled-by: true
+  value: true
+description: |
+  bsp_reset() will use the watchdog to reset the chip
+enabled-by: true
+links: []
+name: LPC32XX_ENABLE_WATCHDOG_RESET
+type: build

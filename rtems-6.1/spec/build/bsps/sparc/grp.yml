@@ -1,0 +1,24 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+build-type: group
+cflags: []
+copyrights:
+- Copyright (C) 2020 embedded brains GmbH & Co. KG
+cppflags: []
+cxxflags: []
+enabled-by: true
+includes: []
+install:
+- destination: ${BSP_INCLUDEDIR}/bsp
+  source:
+  - bsps/sparc/include/bsp/gnatcommon.h
+  - bsps/sparc/include/bsp/gr_leon4_n2x.h
+- destination: ${BSP_INCLUDEDIR}/drvmgr
+  source:
+  - bsps/sparc/include/drvmgr/leon2_amba_bus.h
+ldflags: []
+links:
+- role: build-dependency
+  uid: ../tst-xfail-dl06
+type: build
+use-after: []
+use-before: []

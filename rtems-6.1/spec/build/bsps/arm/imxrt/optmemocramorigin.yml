@@ -1,0 +1,19 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+actions:
+- get-integer: null
+- env-assign: null
+build-type: option
+copyrights:
+- Copyright (C) 2023 embedded brains GmbH & Co. KG
+default:
+- enabled-by: arm/imxrt1166-cm7-saltshaker
+  value: 0x20340000
+- enabled-by: true
+  value: 0x20200000
+description: |
+  Origin of the OCRAM.
+enabled-by: true
+format: '{:#010x}'
+links: []
+name: IMXRT_MEMORY_OCRAM_ORIGIN
+type: build

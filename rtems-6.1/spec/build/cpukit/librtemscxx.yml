@@ -1,0 +1,24 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+build-type: library
+cflags:
+- ${COVERAGE_COMPILER_FLAGS}
+copyrights:
+- Copyright (C) 2020 Chris Johns (http://contemporary.software)
+cppflags: []
+cxxflags:
+- ${COVERAGE_COMPILER_FLAGS}
+- -std=c++17
+enabled-by: true
+includes: []
+install:
+- destination: ${BSP_INCLUDEDIR}/rtems
+  source:
+  - cpukit/include/rtems/error.hpp
+  - cpukit/include/rtems/thread.hpp
+install-path: ${BSP_LIBDIR}
+links: []
+source:
+- cpukit/librtemscxx/error.cpp
+- cpukit/librtemscxx/thread.cpp
+target: rtemscxx
+type: build

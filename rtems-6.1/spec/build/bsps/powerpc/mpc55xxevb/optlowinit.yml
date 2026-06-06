@@ -1,0 +1,18 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+actions:
+- get-boolean: null
+- define-condition: null
+build-type: option
+copyrights:
+- Copyright (C) 2020 embedded brains GmbH & Co. KG
+default:
+- enabled-by: []
+  value: false
+- enabled-by: true
+  value: true
+description: |
+  if defined, do low level initialization
+enabled-by: true
+links: []
+name: MPC55XX_NEEDS_LOW_LEVEL_INIT
+type: build

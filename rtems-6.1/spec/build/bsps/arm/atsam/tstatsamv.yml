@@ -1,0 +1,43 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+actions:
+- set-test-state:
+    reason: null
+    state: exclude
+    tests:
+    - fileio
+    - flashdisk01
+    - fsdosfsname01
+    - fsjffs2empty01
+    - jffs2fserror
+    - jffs2fslink
+    - jffs2fspatheval
+    - jffs2fspermission
+    - jffs2fsrdwr
+    - jffs2fsscandir01
+    - jffs2fssymlink
+    - jffs2fstime
+    - jffs2nandfserror
+    - jffs2nandfslink
+    - jffs2nandfspatheval
+    - jffs2nandfspermission
+    - jffs2nandfsrdwr
+    - jffs2nandfsscandir01
+    - jffs2nandfssymlink
+    - jffs2nandfstime
+    - linpack
+    - psxconfig01
+    - record02
+    - sp16
+    - sp25
+    - sp48
+    - spregionerr01
+    - spstkalloc02
+    - tmfine01
+build-type: option
+copyrights:
+- Copyright (C) 2020 embedded brains GmbH & Co. KG
+default: []
+description: ''
+enabled-by: true
+links: []
+type: build

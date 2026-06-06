@@ -1,0 +1,46 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+build-type: objects
+cflags: []
+copyrights:
+- Copyright (C) 2020 On-Line Applications Research (OAR)
+cppflags: []
+cxxflags: []
+enabled-by: true
+includes: []
+install:
+- destination: ${BSP_INCLUDEDIR}
+  source:
+  - bsps/aarch64/xilinx-zynqmp/include/bsp.h
+- destination: ${BSP_INCLUDEDIR}/bsp
+  source:
+  - bsps/aarch64/xilinx-zynqmp/include/bsp/ecc.h
+  - bsps/aarch64/xilinx-zynqmp/include/bsp/irq.h
+  - bsps/aarch64/xilinx-zynqmp/include/bsp/xil-compat.h
+  - bsps/aarch64/include/bsp/aarch64-mmu.h
+  - bsps/include/bsp/xil-compat-common.h
+links: []
+source:
+- bsps/aarch64/shared/cache/cache.c
+- bsps/aarch64/shared/mmu/mmu-setup.c
+- bsps/aarch64/shared/mmu/vmsav8-64.c
+- bsps/aarch64/shared/start/start-cpu-mpidr.S
+- bsps/aarch64/xilinx-zynqmp/console/console.c
+- bsps/aarch64/xilinx-zynqmp/ecc/cache.c
+- bsps/aarch64/xilinx-zynqmp/ecc/ddr.c
+- bsps/aarch64/xilinx-zynqmp/ecc/ocm.c
+- bsps/aarch64/xilinx-zynqmp/fdt/bsp_fdt.c
+- bsps/aarch64/xilinx-zynqmp/start/bspstart.c
+- bsps/aarch64/xilinx-zynqmp/start/bspstarthooks.c
+- bsps/aarch64/xilinx-zynqmp/start/bspstartmmu.c
+- bsps/aarch64/xilinx-zynqmp/start/i2c-clocks.c
+- bsps/aarch64/xilinx-zynqmp/start/mmu-config.c
+- bsps/shared/dev/btimer/btimer-cpucounter.c
+- bsps/shared/dev/getentropy/getentropy-cpucounter.c
+- bsps/shared/dev/irq/arm-gicv2-zynqmp.c
+- bsps/shared/dev/serial/console-termios-init.c
+- bsps/shared/dev/serial/console-termios.c
+- bsps/shared/irq/irq-default-handler.c
+- bsps/shared/start/bspreset-arm-psci.S
+- bsps/shared/start/gettargethash-default.c
+- bsps/shared/start/sbrk.c
+type: build

@@ -1,0 +1,16 @@
+*** TEST STACK CHECKER ***
+TA1  - rtems_clock_get_tod - 09:00:00   12/31/1988
+TA2  - rtems_clock_get_tod - 09:00:00   12/31/1988
+TA3  - rtems_clock_get_tod - 09:00:00   12/31/1988
+TA1  - rtems_clock_get_tod - 09:00:05   12/31/1988
+TA2  - rtems_clock_get_tod - 09:00:10   12/31/1988
+TA1  - rtems_clock_get_tod - 09:00:10   12/31/1988
+TA3  - rtems_clock_get_tod - 09:00:15   12/31/1988
+                             STACK USAGE BY THREAD
+ID         NAME                  LOW        HIGH       CURRENT     AVAIL   USED
+0x09010001 IDLE                  0x02015198 0x02016187 0x02015ee8   4080    564
+0x0a010002 TA1                   0x020171f8 0x0201a1e7 0x02019f60  12272   1300
+0x0a010003 TA2                   0x0201a228 0x0201d217 0x0201cf90  12272    716
+0x0a010004 TA3                   0x0201d258 0x02020247 0x0201ffc0  12272    716
+0x00000000 Interrupt Stack       0x02012b10 0x02013aff 0x00000000   4080    548
+*** END OF TEST STACK CHECKER ***

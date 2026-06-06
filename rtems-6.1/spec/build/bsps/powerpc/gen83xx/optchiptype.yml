@@ -1,0 +1,25 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+actions:
+- get-integer: null
+- define: null
+build-type: option
+copyrights:
+- Copyright (C) 2020 embedded brains GmbH & Co. KG
+default:
+- enabled-by:
+  - powerpc/mpc8309som
+  - powerpc/br_uid
+  value: 8309
+- enabled-by:
+  - powerpc/mpc8349eamds
+  - powerpc/hsc_cm01
+  value: 8349
+- enabled-by: true
+  value: 8313
+description: |
+  chip type of the MPC83XX family
+enabled-by: true
+format: '{}'
+links: []
+name: MPC83XX_CHIP_TYPE
+type: build

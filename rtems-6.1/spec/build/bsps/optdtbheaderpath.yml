@@ -1,0 +1,24 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+actions:
+- get-string: null
+- define: null
+build-type: option
+copyrights:
+- Copyright (C) 2022 On-Line Applications Research Corporation (OAR)
+default:
+- enabled-by: riscv/beaglevfire
+  value: bsp/beaglevfire.h
+- enabled-by: riscv/mpfs64imafdc
+  value: bsp/mpfs-dtb.h
+- enabled-by: riscv/kendrytek210
+  value: bsp/kendryte-k210-dtb.h
+- enabled-by: true
+  value: false
+description: |
+  the path to the header file containing the device tree binary. See the BSP
+  documentation for more information.
+enabled-by: true
+format: '{}'
+links: []
+name: BSP_DTB_HEADER_PATH
+type: build

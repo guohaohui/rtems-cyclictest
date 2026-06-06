@@ -1,0 +1,18 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+actions:
+- get-integer: null
+- define: null
+build-type: option
+copyrights:
+- Copyright (C) 2020 embedded brains GmbH & Co. KG
+default:
+- enabled-by: true
+  value: 64
+description: |
+  Defines the count of Shared Peripheral Interrupts (SPIs) supported by the
+  interrupt controller.
+enabled-by: true
+format: '{}'
+links: []
+name: BSP_ARM_SHARED_PERIPHERAL_INTERRUPT_COUNT
+type: build

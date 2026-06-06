@@ -1,0 +1,32 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+arch: arm
+bsp: imxrt1052
+build-type: bsp
+cflags: []
+copyrights:
+- Copyright (C) 2020, 2023 embedded brains GmbH & Co. KG
+cppflags: []
+enabled-by: true
+family: imxrt
+includes:
+- bsps/arm/imxrt/mcux-sdk/drivers/common
+- bsps/arm/imxrt/mcux-sdk/devices/MIMXRT1052
+- bsps/arm/imxrt/mcux-sdk/devices/MIMXRT1052/drivers
+- bsps/arm/imxrt/mcux-sdk/devices/MIMXRT1052/xip
+install:
+- destination: ${BSP_INCLUDEDIR}/imxrt
+  source:
+  - bsps/arm/imxrt/dts/imxrt1050-evkb.dts
+  - bsps/arm/imxrt/include/imxrt/imxrt1050.dtsi
+  - bsps/arm/imxrt/include/imxrt/imxrt1050-pinfunc.h
+links:
+- role: build-dependency
+  uid: obj-mimxrt1052
+source:
+- bsps/arm/imxrt/boards/evkbimxrt1050/clock_config.c
+- bsps/arm/imxrt/boards/evkbimxrt1050/flash-dcd.c
+- bsps/arm/imxrt/boards/evkbimxrt1050/flash-flexspi-config.c
+- bsps/arm/imxrt/boards/evkbimxrt1050/pin_mux.c
+- bsps/arm/imxrt/boards/evkbimxrt1050/clock-arm-pll-config.c
+- bsps/arm/imxrt/dts/imxrt1050-evkb.c
+type: build
