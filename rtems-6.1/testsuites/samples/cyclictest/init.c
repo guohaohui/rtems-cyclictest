@@ -455,6 +455,7 @@ static rtems_task Init(rtems_task_argument ignored)
  *                     （RTEMS POSIX 定时器支持有限）
  * POSIX_BARRIERS 5:   align_barr, globalt_barr（线程对齐用）
  */
+#define CONFIGURE_MAXIMUM_PROCESSORS          4   /* 4 核 SMP（与 QEMU -smp 4 一致） */
 #define CONFIGURE_MAXIMUM_TASKS              50
 #define CONFIGURE_MAXIMUM_POSIX_THREADS      10
 #define CONFIGURE_MAXIMUM_POSIX_MUTEXES      10

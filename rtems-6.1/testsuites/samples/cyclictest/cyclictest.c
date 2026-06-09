@@ -368,8 +368,8 @@ static inline int64_t calctime(struct timespec t)
 /*
  * get_available_cpus — 获取系统可用 CPU 数量
  *
- * RTEMS: 使用 rtems_scheduler_get_processor_maximum() + 1
- *   （返回最高处理器索引，+1 得到数量）
+ * RTEMS: 使用 rtems_scheduler_get_processor_maximum()
+ *   （直接返回处理器数量，不需要 +1）
  *   原因: RTEMS 不支持 CPU 热插拔，所有配置的 CPU 始终在线。
  *   sysconf(_SC_NPROCESSORS_ONLN) 在 RTEMS 上不一定可用。
  *
@@ -379,7 +379,7 @@ static inline int64_t calctime(struct timespec t)
 static int get_available_cpus(void)
 {
 #ifdef __rtems__
-  return (int)rtems_scheduler_get_processor_maximum() + 1;
+  return (int)rtems_scheduler_get_processor_maximum();
 #else
   return sysconf(_SC_NPROCESSORS_ONLN);
 #endif
@@ -667,6 +667,8 @@ void process_options(int argc, char *argv[], int max_cpus)
 {
   int error = 0;
   int option_affinity = 0;    /* 是否指定了 -a 亲和性选项 */
+  
+  optind = 0;
 
   for (;;) {
     int option_index = 0;     /* getopt_long 返回的选项索引 */
@@ -708,7 +710,7 @@ void process_options(int argc, char *argv[], int max_cpus)
 
     /* 调用 getopt_long 解析下一个选项 */
     int c = getopt_long(argc, argv,
-                        "a::A::b:c:d:D:h:H:i:l:MNo:p:qrRsSt::uvx",
+                        "a:A::b:c:d:D:h:H:i:l:MNo:p:qrRsSt:uvx",
                         long_options, &option_index);
     if (c == -1)
       break;    /* 所有选项解析完毕 */
@@ -1958,6 +1960,51 @@ int cyclictest_main(int argc, char *argv[])
   int  max_cpus;                   /* 系统 CPU 数量 */
   int  allstopped = 0;             /* 已完成目标周期数的线程计数 */
 
+  /* ===== 第0步: 重置全局状态（支持重复调用） ===== */
+  /*
+   * cyclictest_main 可能被多次调用（例如 shell 中重复执行命令）。
+   * 所有 static 全局变量必须重置为初始默认值，否则上一次运行
+   * 的残留状态（尤其是 shutdown=1）会导致测量线程直接跳过主循环。
+   */
+  shutdown               = 0;
+  tracelimit             = 0;
+  verbose                = 0;
+  oscope_reduction       = 1;
+  histogram              = 0;
+  histofall              = 0;
+  duration               = 0;
+  use_nsecs              = 0;
+  refresh_on_max         = 0;
+  force_sched_other      = 0;
+  priospread             = 0;
+  check_clock_resolution = 0;
+  ct_debug               = 0;
+  use_nanosleep          = MODE_CLOCK_NANOSLEEP;
+  timermode              = TIMER_ABSTIME;
+  use_system             = 0;
+  priority               = 0;
+  policy                 = SCHED_OTHER;
+  num_threads            = 1;
+  max_cycles             = 0;
+  clocksel               = 0;
+  quiet                  = 0;
+  interval               = DEFAULT_INTERVAL;
+  distance               = -1;
+  smp                    = 0;
+  setaffinity            = AFFINITY_UNSPECIFIED;
+  aligned                = 0;
+  secaligned             = 0;
+  offset                 = 0;
+  trigger                = 0;
+  spikes                 = 0;
+  break_thread_id        = 0;
+  break_thread_value     = 0;
+  affinity_mask          = NULL;
+  main_affinity_mask     = NULL;
+  head                   = NULL;
+  tail                   = NULL;
+  current                = NULL;
+
   max_cpus = sysconf(_SC_NPROCESSORS_CONF);   /* 获取 CPU 配置数 */
 
   /* ===== 第1步: 解析命令行 ===== */
@@ -2163,6 +2210,19 @@ int cyclictest_main(int argc, char *argv[])
    *   T: 0 (00123) P:80 I:1000 C: 50000 Min:    5 Act:    7 Avg:    6 Max:   42
    *   T: 1 (00124) P:79 I:1500 C: 50000 Min:    4 Act:    6 Avg:    5 Max:   38
    */
+  /* 打印线程→CPU 映射（与 Linux 原版格式兼容，不修改逐行输出） */
+  if (!quiet) {
+    printf("# CPU mapping:");
+    for (i = 0; i < num_threads; i++) {
+      int cpu = parameters[i]->cpu;
+      if (cpu >= 0)
+        printf(" T:%d→CPU%d", i, cpu);
+      else
+        printf(" T:%d→any", i);
+    }
+    printf("\n");
+  }
+
   while (!shutdown) {
     char *policystr = policyname(policy);
 
@@ -2171,6 +2231,7 @@ int cyclictest_main(int argc, char *argv[])
       printf("policy: %s: loadavg: N/A\r\n\r\n", policystr);
 
     /* 输出每个线程的统计 */
+    allstopped = 0;  /* 每轮重新计数，确保所有线程都完成才退出 */
     for (i = 0; i < num_threads; i++) {
       print_stat(stdout, parameters[i], i, verbose, quiet);
       if (max_cycles && statistics[i]->cycles >= max_cycles)
@@ -2178,7 +2239,7 @@ int cyclictest_main(int argc, char *argv[])
     }
 
     usleep(100000);          /* 100ms 刷新间隔 */
-    if (shutdown || allstopped) break;
+    if (shutdown || allstopped >= num_threads) break;
 
     /* ANSI 转义序列: 光标上移 N 行（覆盖之前的输出，实现原地刷新） */
     if (!verbose && !quiet)
