@@ -73,14 +73,14 @@
  * MODE_CYCLIC          — POSIX 定时器 (timer_create)，精度最高
  * MODE_CLOCK_NANOSLEEP — clock_nanosleep，精度较高，兼容性最好
  * MODE_SYS_ITIMER      — setitimer，Linux 特有，RTEMS 不支持
- * MODE_SYS_NANOSLEEP   — nanosleep，精度较低，RTEMS 兼容性差
+ * MODE_SYS_NANOSLEEP   — nanosleep，tick-based 相对睡眠，延迟漂移
  *
  * MODE_SYS_OFFSET 用于将 use_system 标志转换为模式偏移量。
  */
 #define MODE_CYCLIC             0     /* POSIX 定时器模式 */
 #define MODE_CLOCK_NANOSLEEP    1     /* clock_nanosleep 模式 */
 #define MODE_SYS_ITIMER         2     /* setitimer — RTEMS 上不可用 */
-#define MODE_SYS_NANOSLEEP      3     /* nanosleep — RTEMS 上不可用 */
+#define MODE_SYS_NANOSLEEP      3     /* nanosleep — tick-based, drifting */
 #define MODE_SYS_OFFSET         2     /* 系统模式偏移量 */
 
 /* 定时器模式：相对时间 vs 绝对时间 */

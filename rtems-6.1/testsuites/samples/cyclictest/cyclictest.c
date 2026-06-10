@@ -207,6 +207,7 @@ static struct histoset       hset;          /* 直方图集合（所有线程的
 static int use_nanosleep = MODE_CLOCK_NANOSLEEP;  /* 默认使用 clock_nanosleep */
 static int timermode     = TIMER_ABSTIME;         /* 默认使用绝对时间定时器 */
 static int use_system;                            /* 系统模式标志 */
+static int help_printed;                          /* --help 已打印，应直接退出 */
 static int priority;                              /* 实时线程优先级（0=不使用） */
 static int policy        = SCHED_OTHER;           /* 默认调度策略 */
 static int num_threads   = 1;                     /* 默认 1 个测量线程 */
@@ -888,7 +889,9 @@ void process_options(int argc, char *argv[], int max_cpus)
     /* ---- -?, --help: 帮助 ---- */
     case '?':
     case OPT_HELP:
-      display_help(0); break;             /* 打印帮助信息 */
+      display_help(0);                    /* 打印帮助信息 */
+      help_printed = 1;                   /* 标记已打印，main() 应直接返回 */
+      break;
     }
   }
 
@@ -902,6 +905,11 @@ void process_options(int argc, char *argv[], int max_cpus)
   if ((use_system == MODE_SYS_OFFSET) && (use_nanosleep == MODE_CYCLIC)) {
     printf("system option requires clock_nanosleep, not posix_timers\n");
     use_nanosleep = MODE_CLOCK_NANOSLEEP;  /* 回退到 clock_nanosleep */
+  }
+
+  /* sys_nanosleep: tick-based 相对睡眠，延迟会逐周期漂移 */
+  if (use_system == MODE_SYS_OFFSET) {
+    printf("NOTE: sys_nanosleep (tick-based, relative, drifting)\n");
   }
 
   /* 参数边界检查，不合法值回退到默认值 */
@@ -1228,7 +1236,7 @@ void print_hist(struct thread_param *par[], int nthreads)
  *  相比原版的变化:
  *    - 新增 TSC (rdtsc) 测量支持（更高的测量精度）
  *    - 移除 SMI 计数器读取
- *    - 移除 MODE_SYS_ITIMER/MODE_SYS_NANOSLEEP 模式
+ *    - 移除 MODE_SYS_ITIMER 模式（setitimer 是 Linux 特有）
  *    - 移除 NUMA 节点绑定
  *    - 移除 ftrace 标记
  *    - 调度策略设置增加 #ifdef __rtems__ 条件编译
@@ -1544,6 +1552,41 @@ void *timerthread(void *param)
       }
       break;
 
+    case MODE_SYS_NANOSLEEP:
+      /*
+       * sys_nanosleep 模式: 使用 POSIX nanosleep() 进行 tick 级睡眠。
+       *
+       * 与 clock_nanosleep(TIMER_ABSTIME) 的关键区别：
+       *   - nanosleep 是相对睡眠，每次从"当前时刻"往后睡 interval
+       *   - 无绝对时间锚点 → 延迟会逐周期累积漂移
+       *   - 精度受系统 tick 粒度限制（RTEMS 上通常 ~1ms）
+       *
+       * 测量方法：
+       *   1. 记录 sleep 前时刻 before
+       *   2. nanosleep(&interval) — 相对睡眠
+       *   3. 设置 expected = before + interval（用于延迟计算）
+       *   4. 下一周期的 next = now + interval（从实际醒来时刻漂移）
+       *
+       * RTEMS 实现说明：
+       *   RTEMS 的 nanosleep() 内部调用 clock_nanosleep(CLOCK_REALTIME, …)，
+       *   因此该模式本质上测量的是 CLOCK_REALTIME + 相对睡眠的延迟。
+       */
+      {
+        struct timespec before;
+        ret = clock_gettime(par->clock, &before);
+        if (ret != 0) {
+          if (ret != EINTR)
+            warn("clock_gettime() before nanosleep failed\n");
+          goto out;
+        }
+        nanosleep(&interval, NULL);
+        /* expected wakeup = sleep 起始时刻 + interval */
+        next.tv_sec  = before.tv_sec  + interval.tv_sec;
+        next.tv_nsec = before.tv_nsec + interval.tv_nsec;
+        tsnorm(&next);
+      }
+      break;
+
     default:
       goto out;     /* 未知模式 → 退出 */
     }
@@ -1666,25 +1709,36 @@ void *timerthread(void *param)
 
     /* ===== 计算下一次预期醒来时间 ===== */
     /*
-     * 推进一个 interval。
-     * 如果是 MODE_CYCLIC，还需检查定时器超限次数。
+     * MODE_CLOCK_NANOSLEEP / MODE_CYCLIC: 推进一个 interval（绝对时间锚点）。
+     *
+     * MODE_SYS_NANOSLEEP: 从实际醒来时刻 now 重新计算（相对时间漂移）。
+     *   这是 nanosleep 模式的核心特征——没有绝对时间锚点，
+     *   每次延迟都会累积到下一个周期。
      *
      * 定时器超限: 如果系统负载过高导致一个周期内处理不完，
      * POSIX 定时器可能已经多次到期。timer_getoverrun() 返回
      * 超限次数，我们需要跳过这些已经过去的周期。
      */
-    next.tv_sec  += interval.tv_sec;
-    next.tv_nsec += interval.tv_nsec;
+    if (par->mode == MODE_SYS_NANOSLEEP) {
+      /* 相对模式：从实际醒来时刻漂移 */
+      next.tv_sec  = now.tv_sec  + interval.tv_sec;
+      next.tv_nsec = now.tv_nsec + interval.tv_nsec;
+      tsnorm(&next);
+    } else {
+      /* 绝对模式：从上一个预期时刻推进 */
+      next.tv_sec  += interval.tv_sec;
+      next.tv_nsec += interval.tv_nsec;
 
-    if (par->mode == MODE_CYCLIC) {
+      if (par->mode == MODE_CYCLIC) {
 #if !defined(__rtems__) || defined(CONFIGURE_ENABLE_POSIX_API)
-      int overrun_count = timer_getoverrun(timer);
-      /* 跳过超限的周期 */
-      next.tv_sec  += overrun_count * interval.tv_sec;
-      next.tv_nsec += overrun_count * interval.tv_nsec;
+        int overrun_count = timer_getoverrun(timer);
+        /* 跳过超限的周期 */
+        next.tv_sec  += overrun_count * interval.tv_sec;
+        next.tv_nsec += overrun_count * interval.tv_nsec;
 #endif
+      }
+      tsnorm(&next);    /* 规范化 */
     }
-    tsnorm(&next);    /* 规范化 */
 
     /* ===== 追赶逻辑 ===== */
     /*
@@ -1712,13 +1766,13 @@ void *timerthread(void *param)
 out:
   /* ===== 退出时通知主线程 ===== */
   /*
-   * refresh_on_max 模式下，主线程可能阻塞在条件变量上。
-   * 发送信号确保主线程能退出等待。
+   * 线程无论正常/异常退出都要设置 shutdown，防止主循环死等。
+   * refresh_on_max 模式下，主线程可能阻塞在条件变量上，需额外唤醒。
    */
+  shutdown++;                                   /* 全局停止标志（无条件设置） */
   if (refresh_on_max) {
     pthread_mutex_lock(&refresh_on_max_lock);
-    shutdown++;                             /* 设置全局停止标志 */
-    pthread_cond_signal(&refresh_on_max_cond); /* 唤醒主线程 */
+    pthread_cond_signal(&refresh_on_max_cond);  /* 唤醒可能阻塞的主线程 */
     pthread_mutex_unlock(&refresh_on_max_lock);
   }
 
@@ -1982,6 +2036,7 @@ int cyclictest_main(int argc, char *argv[])
   use_nanosleep          = MODE_CLOCK_NANOSLEEP;
   timermode              = TIMER_ABSTIME;
   use_system             = 0;
+  help_printed           = 0;
   priority               = 0;
   policy                 = SCHED_OTHER;
   num_threads            = 1;
@@ -2010,6 +2065,10 @@ int cyclictest_main(int argc, char *argv[])
   /* ===== 第1步: 解析命令行 ===== */
   process_options(argc, argv, max_cpus);
 
+  /* --help 已打印，直接返回（不执行测试） */
+  if (help_printed)
+    return EXIT_SUCCESS;
+
   if (verbose)
     printf("CPUs: %d\n", max_cpus);
 
@@ -2037,9 +2096,12 @@ int cyclictest_main(int argc, char *argv[])
     struct timespec now, prev, res;
     uint64_t diff;
     int k;
+    int res_ok = 1;  /* clock_getres 是否成功 */
 
-    if (clock_getres(clock, &res))
+    if (clock_getres(clock, &res)) {
       printf("WARN: clock_getres failed\n");
+      res_ok = 0;    /* 标记失败，避免后续打印未初始化的 res */
+    }
 
     /* 1000 次 clock_gettime 调用估算分辨率 */
     clock_gettime(clock, &prev);
@@ -2047,9 +2109,11 @@ int cyclictest_main(int argc, char *argv[])
       clock_gettime(clock, &now);
     diff = calcdiff_ns(now, prev);
     if (diff > 0) {
-      uint64_t reported = (NSEC_PER_SEC * res.tv_sec) + res.tv_nsec;
-      printf("  reported clock resolution: %llu nsec\n",
-             (unsigned long long)reported);
+      if (res_ok) {
+        uint64_t reported = (NSEC_PER_SEC * res.tv_sec) + res.tv_nsec;
+        printf("  reported clock resolution: %llu nsec\n",
+               (unsigned long long)reported);
+      }
       printf("  measured clock resolution: ~%llu nsec\n",
              (unsigned long long)(diff / 1000)); /* 平均每次调用的时间 */
     }
@@ -2062,8 +2126,8 @@ int cyclictest_main(int argc, char *argv[])
    * use_system:    0 或 MODE_SYS_OFFSET(2)
    * 组合:
    *   0+0=0 (MODE_CYCLIC)
-   *   1+0=1 (MODE_CLOCK_NANOSLEEP)
-   *   1+2=3 (MODE_SYS_NANOSLEEP — RTEMS 不支持，被跳过)
+   *   1+0=1 (MODE_CLOCK_NANOSLEEP)  — clock_nanosleep, absolute
+   *   1+2=3 (MODE_SYS_NANOSLEEP)    — nanosleep, tick-based, drifting
    */
 
   /*

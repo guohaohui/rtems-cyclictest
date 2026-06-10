@@ -1,10 +1,10 @@
 # Cyclictest 原版 (rt-tests-2.10) vs RTEMS 6.1 适配版 逐行差异分析
 
 > 本文档对原版 Linux cyclictest (`rt-tests-2.10/src/cyclictest/cyclictest.c`, 2362行)
-> 与 RTEMS 适配版 (`rtems-6.1/testsuites/samples/cyclictest/cyclictest.c`, 1487行)
+> 与 RTEMS 适配版 (`rtems-6.1/testsuites/samples/cyclictest/cyclictest.c`, ~1520行)
 > 进行逐行对比，并解释每一处修改的原因。
 >
-> 同时涵盖新增文件 `init.c` (314行)、`cyclictest.h` (199行) 以及
+> 同时涵盖新增文件 `init.c` (522行)、`cyclictest.h` (199行) 以及
 > `histogram.c/h` 的细微调整。
 
 ---
@@ -13,10 +13,10 @@
 
 | 指标 | 原版 | RTEMS版 | 变化 |
 |------|------|---------|------|
-| `cyclictest.c` 行数 | 2362 | 1487 | -875 (-37%) |
+| `cyclictest.c` 行数 | 2362 | ~1520 | -842 (-36%) |
 | 依赖头文件数 | 7个库头文件 | 1个库头文件 | 全部内联合并 |
 | 内核特性依赖 | 12+ | 0 | 全部移除 |
-| 新增文件 | 无 | `init.c` + `cyclictest.h` | +513行 |
+| 新增文件 | 无 | `init.c` + `cyclictest.h` | +721行 |
 | `histogram.c` | 181行 | 181行 | 仅格式调整 |
 
 ---
@@ -168,7 +168,7 @@
 #define MODE_CYCLIC             0
 #define MODE_CLOCK_NANOSLEEP    1
 #define MODE_SYS_ITIMER         2   /* NOT on RTEMS */
-#define MODE_SYS_NANOSLEEP      3   /* NOT on RTEMS */
+#define MODE_SYS_NANOSLEEP      3   /* tick-based, drifting */
 #define MODE_SYS_OFFSET         2
 
 #define TIMER_RELTIME           0
@@ -186,7 +186,8 @@
 | `MSEC_PER_SEC` 等在 `rt-utils.h` 中 | 移入 `cyclictest.h` | 库头文件已移除，常量统一管理 |
 | `sigev_notify_thread_id` 宏 | **移除** | Linux 使用 `SIGEV_THREAD_ID` 将信号发送到指定线程（通过 `_sigev_un._tid` 字段）。RTEMS 的 POSIX 信号支持有限，改用 `SIGEV_SIGNAL`（进程级信号），不需要此宏 |
 | `SCHED_BATCH` 未定义 | 新增 `#define SCHED_BATCH 3` | 原版依赖 glibc 头文件中的定义，RTEMS 的 `<sched.h>` 可能不包含此值 |
-| `MODE_SYS_ITIMER/MODE_SYS_NANOSLEEP` | 保留定义但标记为不可用 | `setitimer()` 是 Linux 特有的进程定时器机制，RTEMS 不支持（见下文 MODE_SYS_ITIMER 部分） |
+| `MODE_SYS_ITIMER` | 保留定义但标记为不可用 | `setitimer()` 是 Linux 特有的进程定时器机制，RTEMS 不支持 |
+| `MODE_SYS_NANOSLEEP` | **已实现** | 使用 POSIX `nanosleep()` (RTEMS 内部调用 `clock_nanosleep`)，tick-based 相对睡眠，延迟逐周期漂移 |
 
 ### 原版 (L57-88) — uClibc 兼容代码
 ```c
@@ -695,7 +696,7 @@ case MODE_SYS_NANOSLEEP:
     break;
 }
 
-// RTEMS版 L987-1026
+// RTEMS版 L987-1066
 switch (par->mode) {
 case MODE_CYCLIC:
 #if !defined(__rtems__) || defined(CONFIGURE_ENABLE_POSIX_API)
@@ -707,14 +708,16 @@ case MODE_CLOCK_NANOSLEEP:
     // ABS/REL 两种方式（相同）
     break;
 
-default:
-    goto out;
+case MODE_SYS_NANOSLEEP:
+    // nanosleep() tick-based 相对睡眠（已实现）
+    // 记录 sleep 前时刻 → nanosleep(&interval) → 计算预期唤醒时间
+    break;
 }
 ```
 
 **差异**：
-1. `MODE_SYS_ITIMER` 分支移除（见上文）
-2. `MODE_SYS_NANOSLEEP` 分支移除（`nanosleep()` 在 RTEMS 上不可靠，且与 `clock_nanosleep` 功能重复）
+1. `MODE_SYS_ITIMER` 分支移除（`setitimer()` 是 Linux 特有）
+2. `MODE_SYS_NANOSLEEP` 分支**新增实现**：使用 POSIX `nanosleep()` 进行 tick-based 相对睡眠。与 `MODE_CLOCK_NANOSLEEP` 的关键区别在于 `next` 更新方式：`next = now + interval`（从实际醒来时刻漂移），而非 `next += interval`（绝对时间锚点推进）
 3. `MODE_CYCLIC` 增加了条件编译保护
 
 #### 延迟测量
@@ -814,7 +817,7 @@ if (par->bufmsk)
 // SMI 相关写入移除
 ```
 
-#### 定时器超限处理 (原版 L876-880, RTEMS L1103-1109)
+#### 定时器超限处理 (原版 L876-880, RTEMS L1103-1120)
 
 ```c
 // 原版
@@ -824,19 +827,30 @@ if (par->mode == MODE_CYCLIC) {
     next.tv_nsec += overrun_count * interval.tv_nsec;
 }
 
-// RTEMS版
-if (par->mode == MODE_CYCLIC) {
+// RTEMS版 — 区分 MODE_SYS_NANOSLEEP 的漂移语义
+if (par->mode == MODE_SYS_NANOSLEEP) {
+    // nanosleep 模式：从实际醒来时刻重新计算（漂移）
+    next.tv_sec  = now.tv_sec  + interval.tv_sec;
+    next.tv_nsec = now.tv_nsec + interval.tv_nsec;
+    tsnorm(&next);
+} else {
+    // 绝对模式：从上一个预期时刻推进 interval
+    next.tv_sec  += interval.tv_sec;
+    next.tv_nsec += interval.tv_nsec;
+    if (par->mode == MODE_CYCLIC) {
 #if !defined(__rtems__) || defined(CONFIGURE_ENABLE_POSIX_API)
-    int overrun_count = timer_getoverrun(timer);
-    next.tv_sec  += overrun_count * interval.tv_sec;
-    next.tv_nsec += overrun_count * interval.tv_nsec;
+        int overrun_count = timer_getoverrun(timer);
+        next.tv_sec  += overrun_count * interval.tv_sec;
+        next.tv_nsec += overrun_count * interval.tv_nsec;
 #endif
+    }
+    tsnorm(&next);
 }
 ```
 
-**差异**：增加了 `#if` 条件编译保护。
+**差异**：新增了 `MODE_SYS_NANOSLEEP` 的 `next` 更新分支。`nanosleep()` 是相对睡眠（无绝对时间锚点），因此 `next = now + interval` 而非 `next += interval`——延迟会累积漂移到后续周期。
 
-### 7.11 线程退出清理 (原版 L893-925, RTEMS L1123-1152)
+### 7.11 线程退出清理 (原版 L893-925, RTEMS L1123-1163)
 
 ```c
 // 原版
@@ -859,6 +873,8 @@ if (par->policy != SCHED_OTHER || par->prio > 0) {
 }
 #endif
 ```
+
+**关键修复**：`out:` 标签处的 `shutdown++` 从 `if (refresh_on_max)` 条件块内移出，改为**无条件执行**。这确保任何异常退出路径（如未知 mode 触发 `default: goto out`）都能正确通知主监控循环，防止主循环永久死等（cardead）。
 
 ---
 
@@ -913,7 +929,108 @@ void display_help(int error)
 **差异**：
 1. 帮助文本精简（移除不可用选项的详细解释）
 2. 新增"REMOVED"部分，告知用户哪些选项不可用及原因
-3. `display_help` 不再调用 `exit()`（原版根据 `error` 参数决定 `EXIT_FAILURE` 或 `EXIT_SUCCESS`）。RTEMS 版只打印信息就返回，由调用者处理退出逻辑（因为 RTEMS 中没有真正的进程退出）
+3. `display_help` 不再调用 `exit()`（原版根据 `error` 参数决定 `EXIT_FAILURE` 或 `EXIT_SUCCESS`）。RTEMS 版只打印信息并设置 `help_printed=1` 标志，由调用者（`cyclictest_main`）在 `process_options` 返回后检查该标志并 `return EXIT_SUCCESS`，不执行测试循环。
+
+---
+
+## 第8.5部分：命令行参数完整对照表
+
+以下是原版 Linux cyclictest 与 RTEMS 版的参数逐一对比，含每个参数的功能说明。
+
+### 参数总量对比
+
+| 版本 | 总数 | 说明 |
+|------|------|------|
+| **原版 Linux** (rt-tests-2.10) | **~40 个** | 含 short options 25 个 + long-only options 15 个 |
+| **RTEMS 适配版** | **28 个** | 保留 16 个（行为一致）+ 12 个（行为有差异） |
+| **已移除** | **12 个** | Linux 特有内核接口或未实现功能 |
+
+```
+原版 40个 ─┬─ 保留 28个 ─┬─ 16个 行为完全一致 (8.5.1)
+           │              └─ 12个 行为有差异   (8.5.2)
+           └─ 移除 12个 ───  Linux 特有/未实现  (8.5.3)
+```
+
+### 8.5.1 RTEMS 支持的参数（与原版行为一致，共 16 个）
+
+| 短选项 | 长选项 | 参数 | 功能说明 |
+|--------|--------|------|----------|
+| `-b` | `--breaktrace` | USEC | **断点追踪**：当任意线程的延迟超过 USEC 微秒时，记录触发线程和延迟值，立即停止所有测量。用于捕获最差情况延迟 |
+| `-c` | `--clock` | 0/1 | **时钟源选择**：0 = `CLOCK_MONOTONIC`（默认，不受系统时间调整影响），1 = `CLOCK_REALTIME`（受系统时间调整影响） |
+| `-d` | `--distance` | DIST | **线程间隔距离**：多线程模式下，相邻线程的测量间隔偏移量（微秒）。默认 500。例如 `-t 2 -d 200` → T:0 I=1000, T:1 I=1200 |
+| `-D` | `--duration` | TIME | **运行时长**：测试持续时间，到达后自动停止。支持后缀 `m`（分钟）、`h`（小时）、`d`（天），如 `-D 30s`、`-D 5m` |
+| `-h` | `--histogram` | USEC | **延迟直方图**：测试结束后输出延迟分布直方图。参数指定每个桶的宽度（微秒）。超过桶范围的计入溢出统计 |
+| `-H` | `--histofall` | USEC | **直方图+汇总列**：与 `-h` 类似，但每行额外打印一个汇总列（所有线程的最大值），便于多线程对比 |
+| `-i` | `--interval` | INTV | **基准测量间隔**：每个测量周期的睡眠时间（微秒）。默认 1000（1ms）。值越小测量越密集，但系统开销越大 |
+| `-l` | `--loops` | LOOPS | **测量周期数**：每个线程执行的测量循环次数。0 = 无限运行直到手动停止。如 `-l 500` 表示 500 次后自动停止 |
+| `-M` | `--refresh_on_max` | — | **最大值刷新**：仅在出现新的最大延迟时才刷新屏幕输出。减少串口 I/O 开销，适合长时间运行 |
+| `-N` | `--nsecs` | — | **纳秒显示**：所有延迟值以纳秒（ns）而非微秒（µs）为单位显示。数值大约 ×1000 |
+| `-p` | `--priority` | PRIO | **实时优先级**：设置测量线程的最高优先级（0-99）。优先级 > 0 时自动切换到 FIFO 调度策略。不指定时使用 SCHED_OTHER |
+| `-q` | `--quiet` | — | **静默模式**：测试过程中不刷新屏幕，仅在结束时输出一行摘要。适合重定向到文件 |
+| `-S` | `--smp` | — | **SMP 模式**：自动检测 CPU 数量，为每个 CPU 创建一个测量线程，所有线程使用相同的实时优先级。等价于 `-a -t N`（N=CPU数） |
+| `-t` | `--threads` | N | **线程数**：创建 N 个测量线程。不带参数时默认为 CPU 数量。`-t 1` 可使用单线程 |
+| `-u` | `--unbuffered` | — | **无缓冲输出**：强制 stdout 无缓冲（`setvbuf(stdout, NULL, _IONBF, 0)`），确保输出实时刷新到串口 |
+| `-v` | `--verbose` | — | **详细模式**：每个测量周期输出一行 `线程号:周期号:延迟值`。数据量大，适合后续用脚本统计分析 |
+
+### 8.5.2 RTEMS 支持的参数（行为有差异，共 12 个）
+
+| 短选项 | 长选项 | 原版行为 | RTEMS 版行为 | 差异原因 |
+|--------|--------|----------|-------------|----------|
+| `-a` | `--affinity` | 支持范围语法如 `-a 0-3`、`-a 0,2`（libnuma 解析） | 仅支持单个 CPU 号如 `-a 0`。不带参数 = 使用全部 CPU | 无 libnuma，`cpu_set_t` 不支持复杂范围语法 |
+| `-A` | `--aligned` | 线程在特定微秒偏移处对齐唤醒 | **相同**，但依赖 pthread barrier（需 RTEMS 配置 barrier 支持） | RTEMS barrier 支持已验证可用 |
+| `-o` | `--oscope` | 振荡器缩减：verbose 输出按比例 N 抽稀 | **相同**，但 RTEMS 上未在帮助文本中列出（功能可用） | 保持帮助文本简洁 |
+| `-r` | `--relative` | 使用 `TIMER_RELTIME` 相对定时器代替 `TIMER_ABSTIME` | **相同**，但在 `MODE_SYS_NANOSLEEP` 中已默认是相对模式，该选项在 `-s` 模式下无额外影响 | nanosleep 本身就是相对睡眠 |
+| `-R` | `--resolution` | 通过 `clock_getres()` + 1000 次 `clock_gettime()` 估算时钟分辨率 | **容错增强**：如果 `clock_getres()` 失败，跳过 reported resolution 输出（原版会打印未初始化的栈变量垃圾值） | 防御性修复 |
+| `-s` | `--system` | 使用 `sys_nanosleep()`（tick-based 相对睡眠），测量系统原生定时器粒度 | **完整实现**：调用 RTEMS 的 `nanosleep()`（内部封装 `clock_nanosleep(CLOCK_REALTIME,...)`）。关键差异：延迟逐周期漂移（无绝对时间锚点） | RTEMS `nanosleep()` 可用，漂移特性正是该模式的测量目标 |
+| `-x` | `--posix_timers` | 使用 `timer_create()` + `SIGEV_THREAD_ID` 实现高精度周期定时器 | 使用 `SIGEV_SIGNAL`（进程级信号）。若 RTEMS 未配置 `CONFIGURE_ENABLE_POSIX_API`，自动回退到 `MODE_CLOCK_NANOSLEEP` | RTEMS 不支持 `SIGEV_THREAD_ID`（Linux 内核扩展） |
+| `--policy` | — | 支持 `fifo`、`rr`、`other`、`batch`、`idle` | 支持 `fifo`、`rr`、`other`（RTEMS 无 SCHED_BATCH/SCHED_IDLE） | RTEMS 调度策略集有限 |
+| `--priospread` | — | 多线程时优先级逐个递减（最高线程 = `-p` 值，其他递减） | **相同**，使用相同递减逻辑 | |
+| `--spike` | — | 记录所有延迟超过 TRIGGER 的尖峰 | **相同**，尖峰最大记录数由 `--spike-nodes` 控制 | |
+| `--secaligned` | — | 线程在秒边界处对齐唤醒 | **相同**，依赖 pthread barrier | |
+| `--help` | — | 打印帮助后 `exit(0)` | 打印帮助后设置 `help_printed=1`，`cyclictest_main` 检查该标志并 `return EXIT_SUCCESS` | RTEMS 中 `exit()` 会终止整个系统，改用返回 |
+
+### 8.5.3 从原版移除的参数及原因（共 12 个）
+
+| 原版短选项 | 原版长选项 | 原版功能 | 移除原因 |
+|-----------|-----------|----------|----------|
+| `-m` | `--mlockall` | 锁定进程所有内存页，防止 swap 导致的延迟抖动 | RTEMS 无虚拟内存/swap，所有内存始终驻留。**功能天然满足** |
+| `-F` | `--fifo` | 创建命名管道（`mkfifo`），将统计信息写入管道供外部进程读取 | RTEMS 无命名管道文件系统支持。统计数据直接输出到 stdout/串口 |
+| — | `--smi` | 读取 `/dev/cpu/N/msr` 中的 SMI (System Management Interrupt) 计数器 | `/dev/cpu/N/msr` 是 Linux 设备文件；SMI 是 x86 BIOS 概念。即使硬件支持，RTEMS 也无此设备接口 |
+| — | `--laptop` | 笔记本模式：CPU 电源管理相关，减少因 C-state 切换导致的延迟尖峰 | RTEMS 无 CPU 电源管理、无 C-state。CPU 始终全速运行。**功能天然满足** |
+| — | `--latency` | 向 `/dev/cpu_dma_latency` 写入延迟目标值，阻止 CPU 进入深度睡眠 | `/dev/cpu_dma_latency` 是 Linux PM QoS 接口。RTEMS 无此机制 |
+| — | `--deepest-idle-state` | 设置 CPU 最深 idle 状态（依赖 `libcpupower` 库） | `libcpupower` 是 Linux 特有库；RTEMS 不管理 CPU idle 状态 |
+| — | `--tracemark` | 向 ftrace trace_marker 写入标记，配合内核 ftrace 追踪延迟 | ftrace 是 Linux 内核追踪基础设施。RTEMS 无等价机制 |
+| — | `--numa` | NUMA 感知：在最近的内存节点分配线程栈和数据结构 | RTEMS 无 NUMA 硬件抽象。所有内存在单一平面域中 |
+| — | `--mainaffinity` | 设置主线程（监控循环）的 CPU 亲和性 | 功能简化：主线程已在启动时绑定到合适的 CPU。嵌入式 CPU 数量少，手动指定意义不大 |
+| — | `--default-system` | 默认使用系统定时器模式（`nanosleep`）而非 `clock_nanosleep` | 功能与 `-s` 重叠。RTEMS 版始终默认 `MODE_CLOCK_NANOSLEEP`，如需 nanosleep 用 `-s` 显式指定 |
+| — | `--json` | 将测试结果以 JSON 格式写入文件 | **未实现**（非不可用）。未来版本可添加，但当前嵌入式场景 stdout 输出已足够 |
+| — | `--histfile` | 将直方图数据写入独立文件而非 stdout | **未实现**（非不可用）。与 `--json` 类似，stdout 输出已覆盖主要使用场景 |
+
+### 8.5.4 参数功能分类速览
+
+```
+测量控制:
+  -i 间隔  -l 循环次数  -D 运行时长  -d 线程间距
+
+延迟分析:
+  -b 断点追踪  --spike 尖峰记录  -M 最大值刷新
+  -h 直方图  -H 汇总直方图  -R 时钟分辨率
+
+调度与优先级:
+  -p 优先级  --policy 调度策略  --priospread 优先级递减
+
+线程与CPU:
+  -t 线程数  -S SMP模式  -a CPU亲和性
+  -A 对齐唤醒  --secaligned 秒对齐
+
+定时器模式:
+  默认 clock_nanosleep (高精度)  -r 相对定时器
+  -s sys_nanosleep (漂移)  -x POSIX定时器
+
+输出控制:
+  -v 逐周期  -q 静默  -N 纳秒  -o 抽稀  -u 无缓冲
+  --help 帮助
+```
 
 ---
 
@@ -1058,6 +1175,10 @@ if (aligned && secaligned) {
 
 **差异**：RTEMS 版采用"容错回退"策略（不合法值 → 默认值），而非原版的"严格错误退出"。这是因为 RTEMS 测试中优雅降级比崩溃退出更好。
 
+另外新增了两项参数兼容性处理：
+- `MODE_SYS_OFFSET` (`-s` flag)：打印 `NOTE: sys_nanosleep (tick-based, relative, drifting)`，不再强制回退。`MODE_SYS_NANOSLEEP` 现由 `timerthread()` 完整实现。
+- `help_printed` 标志：`--help` 选项设置此标志，`cyclictest_main` 在 `process_options` 返回后检查并直接 `return EXIT_SUCCESS`，不再执行测试。
+
 ---
 
 ## 第10部分：sighand() (原版 L1452-1487, RTEMS L363-381)
@@ -1188,7 +1309,7 @@ void print_hist(struct thread_param *par[], int nthreads)
 
 ---
 
-## 第13部分：Main 函数 (原版 main() L1910-2362, RTEMS cyclictest_main() L1246-1487)
+## 第13部分：Main 函数 (原版 main() L1910-2362, RTEMS cyclictest_main() L1246-1520)
 
 ### 13.1 函数签名
 
@@ -1242,6 +1363,10 @@ if (tracelimit && trace_marker)
 // RTEMS版 L1252-1295
 process_options(argc, argv, max_cpus);   // 直接解析选项
 
+/* --help 已打印，直接返回（不执行测试） */
+if (help_printed)
+    return EXIT_SUCCESS;
+
 if (verbose)
     printf("CPUs: %d\n", max_cpus);       // 简化输出
 
@@ -1250,6 +1375,10 @@ if (verbose)
 // set_latency_target 移除
 // deepest_idle_state 移除
 // enable_trace_mark 移除
+
+// clock_getres 失败修复：如果 clock_getres() 失败，
+// 使用 res_ok 标志跳过 reported clock resolution 输出，
+// 避免打印未初始化的栈变量（垃圾值）
 ```
 
 ### 13.3 线程创建
@@ -1441,7 +1570,7 @@ return ret;
 
 ## 第14部分：init.c — 全新的 RTEMS 入口文件
 
-`init.c` (314 行) 在 RTEMS 版中是全新的，没有原版对应文件。
+`init.c` (522 行) 在 RTEMS 版中是全新的，没有原版对应文件。
 
 ### 14.1 两种运行模式
 
@@ -1698,6 +1827,7 @@ void rt_write_json(const char *filename, int return_code,
 2. **渐进退化**：不支持的选项不回退为错误，而是回退为默认行为
 3. **自注释**：移除的特性都有明确的注释说明原因（header 注释 + inline 注释）
 4. **新增不污染**：`init.c` 和 `cyclictest.h` 作为独立文件承载 RTEMS 特有的入口和声明
+5. **防御性修复**：线程退出时无条件设置 `shutdown` 防止主循环死等；`--help` 通过标志位提前返回而非继续执行测试
 
 ### 代码量对比
 
@@ -1707,8 +1837,9 @@ void rt_write_json(const char *filename, int return_code,
 | 移除的库依赖代码 | ~-400 行 | rt-utils, rt-numa, rt-error, rt-sched, rt-get_cpu |
 | 内联的替代代码 | ~+150 行 | warn/fatal/tsnorm/calcdiff/亲和性/threadalloc |
 | 新增 TSC 支持 | ~+40 行 | rdtsc + 校准逻辑 |
-| 新增 init.c | +314 行 | RTEMS 入口、Shell、任务配置 |
+| 新增 MODE_SYS_NANOSLEEP | ~+30 行 | nanosleep() tick-based 相对睡眠模式 |
+| 新增 init.c | +522 行 | RTEMS 入口、Shell、任务配置（含 Shell 命令宏配置） |
 | 新增 cyclictest.h | +199 行 | 统一声明、条件编译 gettid() |
-| **净变化** | **-500 行** | 2362 → 1487 (cyclictest.c) + 513 (新文件) |
+| Bug 修复 | ~+15 行 | --help 退出、-R 垃圾值保护、shutdown 无条件置位 |
 
 这代表了将一个深度依赖 Linux 内核特性（12+ 个内核接口）的实时测试程序成功移植到一个裸机实时操作系统的完整过程。
