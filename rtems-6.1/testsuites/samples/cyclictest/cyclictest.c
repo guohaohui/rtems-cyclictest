@@ -587,7 +587,7 @@ int check_timer(void)
  */
 void display_help(int error)
 {
-  printf("cyclictest V 1.0.0 (RTEMS port)\n");
+  printf("cyclictest V 1.0.2 (RTEMS port)\n");
   printf("Usage: cyclictest <options>\n\n"
          "-a [CPU]  --affinity      pin threads to CPU (e.g. -a 0, or -a 0-2)\n"
          "-A USEC   --aligned=USEC  align thread wakeups to a specific offset\n"
